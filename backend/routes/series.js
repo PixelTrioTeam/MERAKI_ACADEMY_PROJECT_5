@@ -6,11 +6,11 @@ const {
   deleteSeriesById,
 } = require("../controllers/series");
 const SeriesRouter = express.Router();
+//http://localhost:5000/series/addSeries
 
 SeriesRouter.post("/addSeries", addSeries);
 //http://localhost:5000/series
 SeriesRouter.get("/", getSeries);
-
 
 // http://localhost:5000/series/$id
 SeriesRouter.get("/:id", getSeriesById);
