@@ -33,4 +33,21 @@ const addSeries = (req, res) => {
     });
 };
 
-module.exports = { addSeries };
+const getSeries = (req , res)=>{
+    const query = `select * from series`
+    pool.query(query).then((result)=>{
+        res.status(200).json({
+            success : true,
+            message : 'getting all series',
+            result : result.rows
+        })
+    }).catch((err)=>{
+        res.status(404).json({
+            success : false,
+            message : 'error while getting series',
+            error : err.message
+        })
+    })
+}
+
+module.exports = { addSeries , getSeries };
