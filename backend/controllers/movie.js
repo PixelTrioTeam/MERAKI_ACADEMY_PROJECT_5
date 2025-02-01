@@ -39,4 +39,21 @@ const addMovie = (req, res) => {
     })
 };
 
-module.exports = {addMovie}
+const getMovies = (req , res)=>{
+    const query = `select * from movies`
+    pool.query(query).then((result)=>{
+        res.status(200).json({
+            success : true,
+            message : 'getting all movies',
+            result : result.rows
+        })
+    }).catch((err)=>{
+        res.status(404).json({
+            success : false,
+            message : 'feiled to get movies',
+            error : err.message
+        })
+    })
+}
+
+module.exports = {addMovie , getMovies}
