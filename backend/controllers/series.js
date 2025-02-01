@@ -82,6 +82,30 @@ const getSeriesById = (req, res) => {
     });
 };
 
-// deleteSeriesById
-module.exports = { addSeries, getSeries, getSeriesById,  };
+const deleteSeriesById = (req, res) => {
+  const id = req.params.id;
+  const query = `UPDATE series SET is_deleted = 1 WHERE id= $1;`;
+  const data = [id];
 
+  pool
+    .query(query, data)
+    .then((result) => {
+      if (result.rowCount !== 0) {
+        res.status(200).json({
+          success: true,
+          message: `Series with id: ${id}  deleted successfully`,
+        });
+      } else {
+        throw new Error("Error happened while deleting series");
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        error: err.message,
+      });
+    });
+};
+
+module.exports = { addSeries, getSeries, getSeriesById, deleteSeriesById };
