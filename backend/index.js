@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use('/series' , SeriesRouter)
-app.use('/movie' , movieRouter)
+app.use('/movies' , movieRouter)
 // router middleware
 
 const PORT = process.env.PORT || 5000;
