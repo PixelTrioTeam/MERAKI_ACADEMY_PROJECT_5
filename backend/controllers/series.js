@@ -34,7 +34,7 @@ const addSeries = (req, res) => {
 };
 
 const getSeries = (req, res) => {
-  const query = `select * from series`;
+  const query = `select * from series WHERE is_deleted=0`;
   pool
     .query(query)
     .then((result) => {
@@ -54,31 +54,34 @@ const getSeries = (req, res) => {
 };
 
 const getSeriesById = (req, res) => {
-    const id = req.params.id;
-    const query = `SELECT * FROM series WHERE id = ${id}`;
-    
-    pool.query(query).then((result) => {
+  const id = req.params.id;
+  const query = `SELECT * FROM series WHERE id = ${id}`;
+
+  pool
+    .query(query)
+    .then((result) => {
       if (result.rowCount > 0) {
         return res.status(200).json({
           success: true,
           message: `getting the series with id : ${id}`,
-          result: result.rows
+          result: result.rows,
         });
       } else {
         res.status(404).json({
           success: false,
-          message: `there is no series with id : ${id}`
+          message: `there is no series with id : ${id}`,
         });
       }
-    }).catch((err) => {
+    })
+    .catch((err) => {
       res.status(500).json({
         success: false,
         message: "server error",
-        error: err.message 
+        error: err.message,
       });
     });
-  };
-  
- 
- 
-module.exports = { addSeries, getSeries , getSeriesById };
+};
+
+// deleteSeriesById
+module.exports = { addSeries, getSeries, getSeriesById,  };
+
