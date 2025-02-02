@@ -104,9 +104,56 @@ const getUsers = (req, res) => {
     res.status(500).json({ success: false, message: "Server Error", err: err });
   }
 };
+// function getUserById
+const getUserById = (req, res) => {
+  // access the userid in params
+  const userId = req.params.userId;
+  try {
+    pool
+      .query("select * from users where is_deleted=0 and id=$1", [userId])
+      .then((result) => {
+        res.status(200).json({
+          success: true,
+          message: "user",
+          result: result.rows,
+        });
+      })
+      .catch((err) => {
+        res
+          .status(500)
+          .json({ success: false, message: "Server Error", err: err });
+      });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server Error", err: err });
+  }
+};
 
+// function deleteUserById
+// update  users set is_deleted=0 where id=6
+const deleteUserById = (req, res) => {
+  const userId = req.params.userId;
+  try {
+    pool
+      .query("update  users set is_deleted=0 where id=$1", [userId])
+      .then((result) => {
+        res.status(200).json({
+          success: true,
+          message: "Deleted User",
+        });
+      })
+      .catch((err) => {
+        res
+          .status(500)
+          .json({ success: false, message: "Server Error", err: err });
+      });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server Error", err: err });
+  }
+};
 module.exports = {
   register,
   login,
   getUsers,
+  getUserById,
+  deleteUserById,
 };
