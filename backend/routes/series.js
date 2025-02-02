@@ -6,6 +6,7 @@ const {
   deleteSeriesById,
   getSeriesByActorId,
   getSeriesByDirectorId,
+  getSeriesByWriterId,
 } = require("../controllers/series");
 const SeriesRouter = express.Router();
 
@@ -18,6 +19,7 @@ SeriesRouter.get("/:id", getSeriesById);
 
 SeriesRouter.get("/actor/:id", getSeriesByActorId);
 SeriesRouter.get("/director/:id", getSeriesByDirectorId);
+SeriesRouter.get("/writer/:id", getSeriesByWriterId);
 
 //http://localhost:5000/series/delete/$id
 SeriesRouter.put("/delete/:id", deleteSeriesById);

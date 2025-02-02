@@ -169,6 +169,35 @@ const getSeriesByDirectorId = (req, res) => {
     });
 };
 
+const getSeriesByWriterId = (req, res) => {
+  const { id } = req.params;
+
+  const query = `
+    SELECT series.*, directors.director_name , directors.avatar , writers.writer_name , writers.avatar
+    FROM series 
+    LEFT JOIN directors ON series.director_id = directors.id
+    LEFT JOIN writers ON series.writer_id = writers.id
+    WHERE directors.id = $1 AND series.is_deleted = 0;
+  `;
+
+  pool
+    .query(query, [id])
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "series by the writer getting successfully",
+        result: result.rows,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Error getting series by writer",
+        error: err.message,
+      });
+    });
+};
+
 module.exports = {
   addSeries,
   getSeries,
@@ -176,4 +205,5 @@ module.exports = {
   deleteSeriesById,
   getSeriesByActorId,
   getSeriesByDirectorId,
+  getSeriesByWriterId
 };
