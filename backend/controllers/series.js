@@ -108,4 +108,43 @@ const deleteSeriesById = (req, res) => {
     });
 };
 
-module.exports = { addSeries, getSeries, getSeriesById, deleteSeriesById };
+const getSeriesByActorId = (req, res) => {
+  const { id } = req.params;
+  console.log("id", id);
+
+  const query = `
+  SELECT series.*, actors.actor_name, actors.avatar
+  FROM series
+  LEFT JOIN series_actor ON series.id = series_actor.series_id
+  LEFT JOIN actors ON series_actor.actor_id = actors.id
+  WHERE actors.id = $1 AND series.is_deleted = 0;
+`;
+
+  pool
+    .query(query, [id])
+    .then((result) => {
+      console.log("Query Result:", result.rows);
+      res.status(200).json({
+        success: true,
+        message: "series getting successfully",
+        result: result.rows,
+      });
+    })
+    .catch((err) => {
+      console.log("err", err);
+
+      res.status(500).json({
+        success: false,
+        message: "Error getting series",
+        error: err.message,
+      });
+    });
+};
+
+module.exports = {
+  addSeries,
+  getSeries,
+  getSeriesById,
+  deleteSeriesById,
+  getSeriesByActorId,
+};
