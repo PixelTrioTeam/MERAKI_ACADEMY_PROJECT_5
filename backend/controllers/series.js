@@ -123,7 +123,6 @@ const getSeriesByActorId = (req, res) => {
   pool
     .query(query, [id])
     .then((result) => {
-      console.log("Query Result:", result.rows);
       res.status(200).json({
         success: true,
         message: "series getting successfully",
@@ -141,10 +140,40 @@ const getSeriesByActorId = (req, res) => {
     });
 };
 
+const getSeriesByDirectorId = (req, res) => {
+  const { id } = req.params;
+
+  const query = `
+    SELECT series.*, directors.director_name , directors.avatar , writers.writer_name , writers.avatar
+    FROM series 
+    LEFT JOIN directors ON series.director_id = directors.id
+    LEFT JOIN writers ON series.writer_id = writers.id
+    WHERE directors.id = $1 AND series.is_deleted = 0;
+  `;
+
+  pool
+    .query(query, [id])
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "series by the director getting successfully",
+        result: result.rows,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Error getting series by director",
+        error: err.message,
+      });
+    });
+};
+
 module.exports = {
   addSeries,
   getSeries,
   getSeriesById,
   deleteSeriesById,
   getSeriesByActorId,
+  getSeriesByDirectorId,
 };
