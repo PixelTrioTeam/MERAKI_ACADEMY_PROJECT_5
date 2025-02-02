@@ -4,24 +4,22 @@ const addSeries = (req, res) => {
   const {
     title,
     description,
-    genre,
+    genre_id,
     trailer,
     poster,
     rate,
-    actors,
-    director,
-    writers,
-    episodes,
+    director_id,
+    writer_id,
     created_at,
   } = req.body;
-  const query = `insert into series (title , description , genre , trailer , poster , rate , actors , director , writers , episodes , created_at) Values ('${title}','${description}','${genre}','${trailer}','${poster}','${rate}','${actors}','${director}','${writers}','${episodes}','${created_at}') RETURNING *`;
+  const query = `insert into series (title , description , genre_id , trailer , poster , rate  , director_id , writer_id  , created_at) Values ('${title}','${description}','${genre_id}','${trailer}','${poster}','${rate}','${director_id}','${writer_id}','${created_at}') RETURNING *`;
   pool
     .query(query)
     .then((result) => {
       res.status(201).json({
         success: true,
         message: "series added successfully",
-        result: result,
+        result: result.rows,
       });
     })
     .catch((err) => {
