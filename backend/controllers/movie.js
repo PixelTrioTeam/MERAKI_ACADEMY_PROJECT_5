@@ -43,7 +43,7 @@ const addMovie = (req, res) => {
 };
 
 const getMovies = (req, res) => {
-  const query = `select * from movies WHERE is_deleted=0`;
+  const query = `select * from movies  WHERE is_deleted=0`;
   pool
     .query(query)
     .then((result) => {
@@ -88,4 +88,37 @@ const deleteMovieById = (req, res) => {
     });
 };
 
-module.exports = { addMovie, getMovies, deleteMovieById };
+const getMovieByActorId = (req, res) => {
+  const { id } = req.params;
+
+  const query = `
+    SELECT movies.* , actors.actor_name
+    FROM movies
+    LEFT JOIN movies_actor ON movies.id = movies_actor.movie_id
+    LEFT JOIN actors ON movies_actor.actor_id = actors.id
+    WHERE actors.id = $1 AND movies.is_deleted = 0;
+  `;
+
+  pool
+    .query(query, [id])
+    .then((result) => {
+      console.log("result", result);
+
+      res.status(200).json({
+        success: true,
+        message: "Movies getting successfully",
+        result: result.rows,
+      });
+    })
+    .catch((err) => {
+      console.log("err", err);
+
+      res.status(500).json({
+        success: false,
+        message: "Error getting movies",
+        error: err.message,
+      });
+    });
+};
+
+module.exports = { addMovie, getMovies, deleteMovieById, getMovieByActorId };
