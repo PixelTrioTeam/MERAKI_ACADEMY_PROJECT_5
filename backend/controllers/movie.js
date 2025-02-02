@@ -4,25 +4,23 @@ const addMovie = (req, res) => {
   const {
     title,
     description,
-    genre,
+    genre_id,
     trailer,
     poster,
     rate,
-    actors,
-    director,
-    writers,
+    director_id,
+    writer_id,
     created_at,
   } = req.body;
   const query = `insert into movies (title,
     description,
-    genre,
+    genre_id,
     trailer,
     poster,
     rate,
-    actors,
-    director,
-    writers,
-    created_at) Values ('${title}','${description}','${genre}','${trailer}','${poster}','${rate}','${actors}','${director}','${writers}','${created_at}') RETURNING *`;
+    director_id,
+    writer_id,
+    created_at) Values ('${title}','${description}','${genre_id}','${trailer}','${poster}','${rate}','${director_id}','${writer_id}','${created_at}') RETURNING *`;
 
   pool
     .query(query)
@@ -30,7 +28,7 @@ const addMovie = (req, res) => {
       res.status(201).json({
         success: true,
         message: "the movie added successfully",
-        result: result,
+        result: result.rows,
       });
     })
     .catch((err) => {
@@ -87,5 +85,17 @@ const deleteMovieById = (req, res) => {
       });
     });
 };
+
+const getMovieById = (req , res)=>{
+  const id = req.params.id
+  const query = `select * from movies where id = $1`
+  const data = {id}
+  pool.query(query , data).then((result)=>{
+    res.status(200).json({
+      success : true,
+      message : `the movies with id : ${id}`
+    })
+  }).catch((err)=>{})
+}
 
 module.exports = { addMovie, getMovies, deleteMovieById };
