@@ -149,10 +149,39 @@ const getMoviesByDirectorId = (req, res) => {
     });
 };
 
+const getMoviesByWriterId = (req, res) => {
+  const { id } = req.params;
+
+  const query = `
+    SELECT movies.*, writers.writer_name, writers.avatar
+    FROM movies
+    LEFT JOIN writers ON movies.writer_id = writers.id
+    WHERE writers.id = $1 AND movies.is_deleted = 0;
+  `;
+
+  pool
+    .query(query, [id])
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "Movies by the writer getted successfully",
+        result: result.rows,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Error getting movies by writer",
+        error: err.message,
+      });
+    });
+};
+
 module.exports = {
   addMovie,
   getMovies,
   deleteMovieById,
   getMovieByActorId,
   getMoviesByDirectorId,
+  getMoviesByWriterId,
 };
