@@ -83,7 +83,30 @@ const login = (req, res) => {
     });
 };
 
+// function getUsers
+const getUsers = (req, res) => {
+  try {
+    pool
+      .query("select * from users where is_deleted=0 ")
+      .then((result) => {
+        res.status(200).json({
+          success: true,
+          message: "all users",
+          result: result.rows,
+        });
+      })
+      .catch((err) => {
+        res
+          .status(500)
+          .json({ success: false, message: "Server Error", err: err });
+      });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server Error", err: err });
+  }
+};
+
 module.exports = {
   register,
   login,
+  getUsers,
 };
