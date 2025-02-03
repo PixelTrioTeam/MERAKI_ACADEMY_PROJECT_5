@@ -83,6 +83,11 @@ const login = (req, res) => {
     });
 };
 
+ getMovieById
+module.exports = {
+  register,
+  login,
+
 // function getUsers
 const getUsers = (req, res) => {
   try {

@@ -9,6 +9,8 @@ const {
   getMoviesByWriterId,
 } = require("../controllers/movie");
 
+
+// http://localhost:5000/movie/addMovie
 movieRouter.post("/addMovie", addMovie);
 
 // http://localhost:5000/movie
