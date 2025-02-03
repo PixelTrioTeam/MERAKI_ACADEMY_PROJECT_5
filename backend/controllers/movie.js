@@ -86,20 +86,6 @@ const deleteMovieById = (req, res) => {
     });
 };
 
- getMovieById
-const getMovieById = (req , res)=>{
-  const id = req.params.id
-  const query = `select * from movies where id = $1`
-  const data = {id}
-  pool.query(query , data).then((result)=>{
-    res.status(200).json({
-      success : true,
-      message : `the movies with id : ${id}`
-    })
-  }).catch((err)=>{})
-}
-
-module.exports = { addMovie, getMovies, deleteMovieById };
 
 const getMovieByActorId = (req, res) => {
   const { id } = req.params;
@@ -190,6 +176,26 @@ const getMoviesByWriterId = (req, res) => {
     });
 };
 
+
+const getMovieById = (req, res) => {
+  const id = req.params.id;
+  const query = `select * from movies where id = ${id}`
+  pool.query(query).then((result)=>{
+    res.status(200).json({
+      success : true,
+      message : `the movie with id : ${id}`,
+      result : result.rows
+    })
+  }).catch((err)=>{
+    res.status(404).json({
+      success : false,
+      message : `no movie found with id : ${id}`,
+      error : err.message
+    })
+  })
+};
+
+
 module.exports = {
   addMovie,
   getMovies,
@@ -197,5 +203,9 @@ module.exports = {
   getMovieByActorId,
   getMoviesByDirectorId,
   getMoviesByWriterId,
+  getMovieById
 };
+
+
+
 
