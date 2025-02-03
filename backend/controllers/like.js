@@ -77,4 +77,56 @@ const likeMovieOrSeries = (req, res) => {
   }
 };
 
-module.exports = { likeMovieOrSeries };
+const unlikeMovieOrSeries = (req, res) => {
+  const { user_id, movie_id, series_id } = req.body;
+
+  if (movie_id) {
+    pool
+      .query(
+        `
+          UPDATE likes
+          SET like_status = 0
+          WHERE user_id = $1 AND movie_id = $2;
+        `,
+        [user_id, movie_id]
+      )
+      .then(() => {
+        res.status(200).json({
+          success: true,
+          message: `Movie like status updated to unlike`,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          success: false,
+          message: "Error updating like status",
+          error: err.message,
+        });
+      });
+  } else if (series_id) {
+    pool
+      .query(
+        `
+          UPDATE likes
+          SET like_status = 0
+          WHERE user_id = $1 AND series_id = $2;
+        `,
+        [user_id, series_id]
+      )
+      .then(() => {
+        res.status(200).json({
+          success: true,
+          message: `Series like status updated to unlike`,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          success: false,
+          message: "Error updating like status",
+          error: err.message,
+        });
+      });
+  }
+};
+
+module.exports = { likeMovieOrSeries, unlikeMovieOrSeries };
