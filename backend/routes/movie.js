@@ -7,7 +7,8 @@ const {
   getMovieByActorId,
   getMoviesByDirectorId,
   getMoviesByWriterId,
-  getMovieById
+  getMovieById,
+  getMovieByGenreId
 
 
 } = require("../controllers/movie");
@@ -26,6 +27,8 @@ movieRouter.get("/writer/:id", getMoviesByWriterId);
 //http://localhost:5000/movie/$id
 movieRouter.put("/:id", deleteMovieById);
 movieRouter.get("/:id", getMovieById);
+movieRouter.get("/genre/:id", getMovieByGenreId);
+
 
 
 module.exports = movieRouter;
