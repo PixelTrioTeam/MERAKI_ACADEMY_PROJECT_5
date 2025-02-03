@@ -5,7 +5,8 @@ require("./models/db");
 const SeriesRouter = require("./routes/series");
 const movieRouter = require("./routes/movie");
 const userRouter = require("./routes/user");
-const favoriteRouter = require('./routes/favorite')
+const favoriteRouter = require("./routes/favorite");
+const likeRouter = require("./routes/likes");
 //routers
 
 const app = express();
@@ -14,12 +15,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-
-
 app.use("/series", SeriesRouter);
 app.use("/movie", movieRouter);
 app.use("/user", userRouter);
-app.use('/favorite' , favoriteRouter)
+app.use("/favorite", favoriteRouter);
+app.use("/like", likeRouter);
 
 // router middleware
 
