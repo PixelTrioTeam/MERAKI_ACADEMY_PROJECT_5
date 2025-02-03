@@ -41,7 +41,16 @@ const addMovie = (req, res) => {
 };
 
 const getMovies = (req, res) => {
-  const query = `select * from movies  WHERE is_deleted=0`;
+  const query =  `
+  SELECT movies.*, 
+         genre.genre_type AS genre_name, 
+         directors.director_name AS director_name, 
+         writers.writer_name AS writer_name 
+  FROM movies 
+  LEFT JOIN genre ON movies.genre_id = genre.id 
+  LEFT JOIN directors ON movies.director_id = directors.id 
+  LEFT JOIN writers ON movies.writer_id = writers.id 
+  WHERE movies.is_deleted = 0`;
   pool
     .query(query)
     .then((result) => {
