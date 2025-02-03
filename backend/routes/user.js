@@ -3,10 +3,7 @@ const express = require("express");
 
 // import funcitons
 
-const { register, login, getUsers,getUserById,deleteUserById } = require("../controllers/user");
 
-
-const { register, login } = require("../controllers/user");
 
 const { register, login, getUsers,getUserById,deleteUserById } = require("../controllers/user");
 
