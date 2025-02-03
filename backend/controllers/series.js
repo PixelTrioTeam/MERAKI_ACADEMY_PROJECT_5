@@ -196,6 +196,34 @@ const getSeriesByWriterId = (req, res) => {
     });
 };
 
+const getSeriesByGenreId = (req, res) => {
+  const id = req.params.id;
+  const query = `SELECT * FROM Series WHERE genre_id = $1`;
+  
+  pool.query(query, [id])
+    .then((result) => {
+      if (result.rowCount <= 0) {
+        return res.status(200).json({
+          success: true,
+          message: `No Series found for genre ID: ${id}`,
+          result: result.rows
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: `Series retrieved successfully for genre ID: ${id}`,
+        result: result.rows
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Error retrieving Series for genre ID: ${id}`,
+        error: err.message
+      });
+    });
+};
+
 module.exports = {
   addSeries,
   getSeries,
@@ -203,5 +231,6 @@ module.exports = {
   deleteSeriesById,
   getSeriesByActorId,
   getSeriesByDirectorId,
-  getSeriesByWriterId
+  getSeriesByWriterId,
+  getSeriesByGenreId
 };
