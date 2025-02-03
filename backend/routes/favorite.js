@@ -1,18 +1,19 @@
-const express = require('express')
+const express = require("express");
 
-const {addToFavorit , removeFromFavorite , getFavorite} = require('../controllers/favorite')
+const {
+  addToFavorit,
+  removeFromFavorite,
+  getFavorite,
+} = require("../controllers/favorite");
 
-const FavoriteRouter = express.Router()
+const FavoriteRouter = express.Router();
 
-const authentication = require('../middlewares/authentication')
+const authentication = require("../middlewares/authentication");
 
-FavoriteRouter.post('/add' ,authentication, addToFavorit)
-FavoriteRouter.post('/remove' ,authentication, removeFromFavorite)
-
+FavoriteRouter.post("/add", authentication, addToFavorit);
+FavoriteRouter.post("/remove", authentication, removeFromFavorite);
 
 // get all favorite list
-FavoriteRouter.get('/' ,authentication, getFavorite)
+FavoriteRouter.get("/", authentication, getFavorite);
 
-
-
-module.exports = FavoriteRouter
+module.exports = FavoriteRouter;

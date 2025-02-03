@@ -1,5 +1,5 @@
 const express = require("express");
-
+const authentication = require("../middlewares/authentication");
 const {
   likeMovieOrSeries,
   unlikeMovieOrSeries,
@@ -7,7 +7,7 @@ const {
 
 const likeRouter = express.Router();
 
-likeRouter.post("/addlike", likeMovieOrSeries);
-likeRouter.post("/unlike", unlikeMovieOrSeries);
+likeRouter.post("/addlike", authentication, likeMovieOrSeries);
+likeRouter.post("/unlike", authentication, unlikeMovieOrSeries);
 
 module.exports = likeRouter;
