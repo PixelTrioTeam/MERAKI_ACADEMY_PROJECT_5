@@ -32,7 +32,24 @@ const addSeries = (req, res) => {
 };
 
 const getSeries = (req, res) => {
-  const query = `select * from series WHERE is_deleted=0`;
+  const query = `SELECT 
+    series.*, 
+    genre.genre_type AS genre_name, 
+    directors.director_name AS director_name, 
+    writers.writer_name AS writer_name,
+    episodes.id AS episode_id,
+    episodes.title AS episode_title,
+    episodes.episode_number,
+    episodes.episode,
+    episodes.length_episode
+FROM series
+LEFT JOIN genre ON series.genre_id = genre.id 
+LEFT JOIN directors ON series.director_id = directors.id 
+LEFT JOIN writers ON series.writer_id = writers.id 
+LEFT JOIN episodes ON series.id = episodes.series_id 
+WHERE series.is_deleted = 0;
+
+`;
   pool
     .query(query)
     .then((result) => {
@@ -199,27 +216,28 @@ const getSeriesByWriterId = (req, res) => {
 const getSeriesByGenreId = (req, res) => {
   const id = req.params.id;
   const query = `SELECT * FROM Series WHERE genre_id = $1`;
-  
-  pool.query(query, [id])
+
+  pool
+    .query(query, [id])
     .then((result) => {
       if (result.rowCount <= 0) {
         return res.status(200).json({
           success: true,
           message: `No Series found for genre ID: ${id}`,
-          result: result.rows
+          result: result.rows,
         });
       }
       res.status(200).json({
         success: true,
         message: `Series retrieved successfully for genre ID: ${id}`,
-        result: result.rows
+        result: result.rows,
       });
     })
     .catch((err) => {
       res.status(500).json({
         success: false,
         message: `Error retrieving Series for genre ID: ${id}`,
-        error: err.message
+        error: err.message,
       });
     });
 };
@@ -232,5 +250,5 @@ module.exports = {
   getSeriesByActorId,
   getSeriesByDirectorId,
   getSeriesByWriterId,
-  getSeriesByGenreId
+  getSeriesByGenreId,
 };
