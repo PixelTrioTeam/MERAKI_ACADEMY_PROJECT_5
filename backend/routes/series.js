@@ -7,6 +7,7 @@ const {
   getSeriesByActorId,
   getSeriesByDirectorId,
   getSeriesByWriterId,
+  getSeriesByGenreId
 } = require("../controllers/series");
 const SeriesRouter = express.Router();
 //http://localhost:5000/series/addSeries
@@ -21,6 +22,8 @@ SeriesRouter.get("/:id", getSeriesById);
 SeriesRouter.get("/actor/:id", getSeriesByActorId);
 SeriesRouter.get("/director/:id", getSeriesByDirectorId);
 SeriesRouter.get("/writer/:id", getSeriesByWriterId);
+SeriesRouter.get("/genre/:id", getSeriesByGenreId);
+
 
 //http://localhost:5000/series/delete/$id
 SeriesRouter.put("/delete/:id", deleteSeriesById);
