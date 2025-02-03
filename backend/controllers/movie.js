@@ -41,7 +41,7 @@ const addMovie = (req, res) => {
 };
 
 const getMovies = (req, res) => {
-  const query =  `
+  const query = `
   SELECT movies.*, 
          genre.genre_type AS genre_name, 
          directors.director_name AS director_name, 
@@ -94,7 +94,6 @@ const deleteMovieById = (req, res) => {
       });
     });
 };
-
 
 const getMovieByActorId = (req, res) => {
   const { id } = req.params;
@@ -185,54 +184,73 @@ const getMoviesByWriterId = (req, res) => {
     });
 };
 
-
 const getMovieById = (req, res) => {
   const id = req.params.id;
-  const query = `select * from movies where id = ${id}`
-  pool.query(query).then((result)=>{
-    res.status(200).json({
-      success : true,
-      message : `the movie with id : ${id}`,
-      result : result.rows
+  const query = `SELECT 
+    movies.*, 
+    directors.director_name AS director_name,
+    writers.writer_name AS writer_name,
+    genre.genre_type AS genre_name,
+    ARRAY_AGG(actors.actor_name) AS actor_names
+FROM movies
+LEFT JOIN genre ON movies.genre_id = genre.id
+LEFT JOIN directors ON movies.director_id = directors.id
+LEFT JOIN writers ON movies.writer_id = writers.id
+LEFT JOIN series_actor ON movies.id = series_actor.series_id  
+LEFT JOIN actors ON series_actor.actor_id = actors.id         
+WHERE movies.id = ${id}
+GROUP BY 
+    movies.id, 
+    directors.director_name, 
+    writers.writer_name, 
+    genre.genre_type;
+`;
+  pool
+    .query(query)
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: `the movie with id : ${id}`,
+        result: result.rows,
+      });
     })
-  }).catch((err)=>{
-    res.status(404).json({
-      success : false,
-      message : `no movie found with id : ${id}`,
-      error : err.message
-    })
-  })
+    .catch((err) => {
+      res.status(404).json({
+        success: false,
+        message: `no movie found with id : ${id}`,
+        error: err.message,
+      });
+    });
 };
 
 const getMovieByGenreId = (req, res) => {
   const id = req.params.id;
   const query = `SELECT * FROM movies WHERE genre_id = $1`;
-  
-  pool.query(query, [id])
+
+  pool
+    .query(query, [id])
     .then((result) => {
       if (result.rowCount <= 0) {
         return res.status(200).json({
           success: true,
           message: `No movies found for genre ID: ${id}`,
-          result: result.rows
+          result: result.rows,
         });
       }
       res.status(200).json({
         success: true,
         message: `Movies retrieved successfully for genre ID: ${id}`,
-        result: result.rows
+        result: result.rows,
       });
     })
     .catch((err) => {
       res.status(500).json({
         success: false,
         message: `Error retrieving movies for genre ID: ${id}`,
-        error: err.message
+        error: err.message,
       });
     });
 };
-
-
 
 module.exports = {
   addMovie,
@@ -242,9 +260,5 @@ module.exports = {
   getMoviesByDirectorId,
   getMoviesByWriterId,
   getMovieById,
-  getMovieByGenreId
+  getMovieByGenreId,
 };
-
-
-
-

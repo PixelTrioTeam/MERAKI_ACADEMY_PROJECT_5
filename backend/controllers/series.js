@@ -37,7 +37,6 @@ const getSeries = (req, res) => {
     genre.genre_type AS genre_name, 
     directors.director_name AS director_name, 
     writers.writer_name AS writer_name,
-    episodes.id AS episode_id,
     episodes.title AS episode_title,
     episodes.episode_number,
     episodes.episode,
@@ -70,7 +69,25 @@ WHERE series.is_deleted = 0;
 
 const getSeriesById = (req, res) => {
   const id = req.params.id;
-  const query = `SELECT * FROM series WHERE id = ${id}`;
+  const query = `SELECT 
+    series.*, 
+    directors.director_name AS director_name,
+    writers.writer_name AS writer_name,
+    genre.genre_type AS genre_name,
+    ARRAY_AGG(actors.actor_name) AS actor_names
+FROM series
+LEFT JOIN genre ON series.genre_id = genre.id
+LEFT JOIN directors ON series.director_id = directors.id
+LEFT JOIN writers ON series.writer_id = writers.id
+LEFT JOIN series_actor ON series.id = series_actor.series_id
+LEFT JOIN actors ON series_actor.actor_id = actors.id
+WHERE series.id = ${id}
+GROUP BY 
+    series.id, 
+    directors.director_name, 
+    writers.writer_name, 
+    genre.genre_type;
+`;
 
   pool
     .query(query)
