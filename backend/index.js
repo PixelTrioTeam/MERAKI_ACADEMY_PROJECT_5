@@ -13,8 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/series' , SeriesRouter)
-app.use('/movies' , movieRouter)
+
 
 app.use("/series", SeriesRouter);
 app.use("/movie", movieRouter);

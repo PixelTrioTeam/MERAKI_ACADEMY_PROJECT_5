@@ -8,6 +8,8 @@ const {
   getMoviesByDirectorId,
   getMoviesByWriterId,
   getMovieById
+
+
 } = require("../controllers/movie");
 
 
