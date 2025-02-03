@@ -41,16 +41,26 @@ const addMovie = (req, res) => {
 };
 
 const getMovies = (req, res) => {
-  const query = `
-  SELECT movies.*, 
-         genre.genre_type AS genre_name, 
-         directors.director_name AS director_name, 
-         writers.writer_name AS writer_name 
-  FROM movies 
-  LEFT JOIN genre ON movies.genre_id = genre.id 
-  LEFT JOIN directors ON movies.director_id = directors.id 
-  LEFT JOIN writers ON movies.writer_id = writers.id 
-  WHERE movies.is_deleted = 0`;
+  const query = `SELECT 
+  movies.*, 
+  directors.director_name AS director_name,
+  writers.writer_name AS writer_name,
+  genre.genre_type AS genre_name,
+  ARRAY_AGG(actors.actor_name) AS actor_names
+FROM movies
+LEFT JOIN genre ON movies.genre_id = genre.id
+LEFT JOIN directors ON movies.director_id = directors.id
+LEFT JOIN writers ON movies.writer_id = writers.id
+LEFT JOIN movies_actor ON movies.id = movies_actor.movie_id
+LEFT JOIN actors ON movies_actor.actor_id = actors.id         
+WHERE movies.is_deleted = 0
+GROUP BY 
+  movies.id, 
+  directors.director_name, 
+  writers.writer_name, 
+  genre.genre_type;
+`;
+  // WHERE movies.is_deleted = 0`;
   pool
     .query(query)
     .then((result) => {
