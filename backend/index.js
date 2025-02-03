@@ -12,6 +12,7 @@ const app = express();
 //built-in middleware
 app.use(express.json());
 app.use(cors());
+ getMovieById
 // <<<<<<< HEAD
 app.use('/series' , SeriesRouter)
 app.use('/movies' , movieRouter)
@@ -19,7 +20,12 @@ app.use('/movies' , movieRouter)
 app.use("/series", SeriesRouter);
 app.use("/movie", movieRouter);
 app.use("/user", userRouter);
-// >>>>>>> 3ae170b7d3afc24e392fe65f5e5f4ed45c930890
+
+
+app.use("/series", SeriesRouter);
+app.use("/movie", movieRouter);
+app.use("/user", userRouter);
+
 // router middleware
 
 const PORT = process.env.PORT || 5000;
