@@ -83,9 +83,6 @@ const login = (req, res) => {
     });
 };
 
-
-
-
 // function getUsers
 const getUsers = (req, res) => {
   try {
@@ -137,7 +134,7 @@ const deleteUserById = (req, res) => {
   const userId = req.params.userId;
   try {
     pool
-      .query("update  users set is_deleted=0 where id=$1", [userId])
+      .query("update  users set is_deleted=1 where id=$1", [userId])
       .then((result) => {
         res.status(200).json({
           success: true,
