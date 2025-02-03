@@ -52,4 +52,28 @@ const removeFromFavorite = (req, res) => {
         });
 };
 
-module.exports = {addToFavorit , removeFromFavorite}
+
+const getFavorite = (req, res) => {
+    const user_id = req.token.userId;
+    if (!user_id) {
+        return res.status(401).json({ success: false, message: "Please login to see your list" });
+    }
+    
+    const query = `SELECT * FROM favorites WHERE user_id = $1`;
+    pool.query(query, [user_id])
+        .then((result) => {
+            if (result.rows.length === 0) {
+                return res.status(200).json({ success: true, message: "Your favorite list is empty", result: [] });
+            }
+            res.status(200).json({
+                success: true,
+                message: `The favorite list for user with id: ${user_id}`,
+                result: result.rows
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({ success: false, message: "Database error", error: err.message });
+        });
+};
+
+module.exports = {addToFavorit , removeFromFavorite , getFavorite}
