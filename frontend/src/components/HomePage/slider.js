@@ -11,19 +11,19 @@ const ControlledCarousel = () => {
 
   return (
     <Carousel activeIndex={index} onSelect={handleSelect}>
-      <Carousel.Item>
-        <img
+      <Carousel.Item className="sliderDiv">
+        <img 
           className="Slider-img"
           src="https://rukminim2.flixcart.com/image/850/1000/xif0q/poster/h/d/k/medium-squid-game-hd-poster-for-wall-decor-a3-poster-squid-game-original-imagv2vxrqtudpet.jpeg?q=20&crop=false"
         />
-        <img
+        {/* <img
           className="Slider-img"
           src="https://www.tallengestore.com/cdn/shop/products/PrisonBreak-NetflixTVShowPoster_72517e2c-3db7-48cb-82f5-ea8c2916bfb3.jpg?v=1589271930"
         />
         <img
           className="Slider-img"
           src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/3a1654116269619.605e35b102e33.jpg"
-        />
+        /> */}
 
         <div className="carousel-description">
           <p className="description-text">
@@ -33,7 +33,7 @@ const ControlledCarousel = () => {
         </div>
       </Carousel.Item>
       <Carousel.Item>
-        <div>
+        <div className="flexSlider">
         <img
           className="Slider-img"
           src="https://i0.wp.com/www.heyuguys.com/images/2014/09/Interstellar-Poster.png"
