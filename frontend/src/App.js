@@ -1,5 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import WelcomPage from './components/WelcomePage/welcomePage'
 
 
 
@@ -8,7 +9,7 @@ import { Route, Routes } from "react-router-dom";
 const App = () => {
   return (
     <div className="App">
-      
+      <WelcomPage/>
     
     </div>
   );
