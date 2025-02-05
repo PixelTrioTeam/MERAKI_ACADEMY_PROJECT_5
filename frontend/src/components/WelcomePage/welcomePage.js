@@ -20,6 +20,8 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import './welcome.css'
+import { useNavigate } from "react-router-dom";
+
 
 const pages = ['Movies', 'Series', 'Genre'];
 const genres = ['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi'];
@@ -28,6 +30,7 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElGenre, setAnchorElGenre] = React.useState(null);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const nav = useNavigate()
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -165,7 +168,7 @@ function ResponsiveAppBar() {
             }}
           />
 
-          <Button  variant="contained" sx={{ backgroundColor: 'red', color: 'white', borderRadius: 2, boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)', mr: 1 ,width : '100px'}}>
+          <Button onClick={()=>{nav('/login')}}  variant="contained" sx={{ backgroundColor: 'red', color: 'white', borderRadius: 2, boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)', mr: 1 ,width : '100px'}}>
             Login
           </Button>
 

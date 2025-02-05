@@ -33,6 +33,7 @@ const ControlledCarousel = () => {
         </div>
       </Carousel.Item>
       <Carousel.Item>
+        <div>
         <img
           className="Slider-img"
           src="https://i0.wp.com/www.heyuguys.com/images/2014/09/Interstellar-Poster.png"
@@ -45,7 +46,7 @@ const ControlledCarousel = () => {
           className="Slider-img"
           src="https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg"
         />
-
+</div>
         <div className="carousel-description">
           <p className="description-text">
             The legend of Gotham’s protector continues.
