@@ -7,21 +7,19 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import MovieIcon from '@mui/icons-material/Movie';
+import MenuItem from '@mui/material/MenuItem';
+
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import './navBar.css'
-import { useNavigate } from "react-router-dom";
-
+import './navBar.css';
+import { useNavigate } from 'react-router-dom';
 
 const pages = ['Movies', 'Series', 'Genre'];
 const genres = ['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi'];
@@ -30,7 +28,7 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElGenre, setAnchorElGenre] = React.useState(null);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-  const nav = useNavigate()
+  const nav = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -106,7 +104,7 @@ function ResponsiveAppBar() {
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
                 ) : (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <MenuItem key={page} onClick={() => nav(`/${page.toLowerCase()}`)}>
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
                 )
@@ -146,6 +144,7 @@ function ResponsiveAppBar() {
               ) : (
                 <Button
                   key={page}
+                  onClick={() => nav(`/${page.toLowerCase()}`)}
                   sx={{ my: 2, color: 'white', display: 'block', width: '150px' }}
                 >
                   {page}
@@ -168,7 +167,7 @@ function ResponsiveAppBar() {
             }}
           />
 
-          <Button onClick={()=>{nav('/login')}}  variant="contained" sx={{ backgroundColor: 'red', color: 'white', borderRadius: 2, boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)', mr: 1 ,width : '100px'}}>
+          <Button onClick={() => nav('/login')} variant="contained" sx={{ backgroundColor: 'red', color: 'white', borderRadius: 2, boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)', mr: 1, width: '100px' }}>
             Login
           </Button>
 
@@ -176,7 +175,7 @@ function ResponsiveAppBar() {
             edge="end"
             color="inherit"
             onClick={toggleDrawer(true)}
-            sx={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', borderRadius: 2, padding: '8px',width:'50px' }}
+            sx={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', borderRadius: 2, padding: '8px', width: '50px' }}
           >
             <MenuIcon />
           </IconButton>
