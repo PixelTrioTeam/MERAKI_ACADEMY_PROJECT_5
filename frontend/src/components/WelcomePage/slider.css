@@ -1,0 +1,57 @@
+.Slider-img{
+ 
+    margin-top: 40px;
+    width: 300px;
+    height: 500px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px; 
+  color: red;
+
+}
+
+.carousel-description {
+    position: relative;
+    margin-top: 40px;
+    bottom: 20px; /* Adjusted to place the description and button at the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    background: rgba(0, 0, 0, 0.6); /* Dark background with transparency */
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+  }
+  
+  /* Styling for description text */
+  .description-text {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  /* Styling for the button */
+  .btn-primary {
+    background-color: #ff5733; /* Button color */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #e04e2e; /* Darker shade on hover */
+  }
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+  background-color: #0056b3; 
+  color: red;
+}
