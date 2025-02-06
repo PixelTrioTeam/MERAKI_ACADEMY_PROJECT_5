@@ -2,7 +2,7 @@ import { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import "./slider.css";
 
-const ControlledCarousel = () => {
+const HomePage = () => {
   const [index, setIndex] = useState(0);
 
   const handleSelect = (selectedIndex) => {
@@ -81,4 +81,4 @@ const ControlledCarousel = () => {
   );
 };
 
-export default ControlledCarousel;
+export default HomePage;
