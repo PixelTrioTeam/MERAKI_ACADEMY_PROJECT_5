@@ -1,30 +1,30 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
-import MovieIcon from '@mui/icons-material/Movie';
-import MenuItem from '@mui/material/MenuItem';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchIcon from "@mui/icons-material/Search";
+import MovieIcon from "@mui/icons-material/Movie";
+import MenuItem from "@mui/material/MenuItem";
 
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import './navBar.css';
-import { useNavigate } from 'react-router-dom';
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import "./navBar.css";
+import { useNavigate } from "react-router-dom";
 
-const pages = ['Movies', 'Series', 'Genre'];
-const genres = ['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi'];
+const pages = ["Movies", "Series", "Genre"];
+const genres = ["Action", "Comedy", "Drama", "Horror", "Sci-Fi"];
 
-function ResponsiveAppBar() {
+function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElGenre, setAnchorElGenre] = React.useState(null);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -47,17 +47,23 @@ function ResponsiveAppBar() {
   };
 
   const toggleDrawer = (open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
     setDrawerOpen(open);
   };
 
   return (
-    <AppBar position="static" sx={{ background: 'linear-gradient(to right, red, black)' }}>
+    <AppBar
+      position="static"
+      sx={{ background: "linear-gradient(to right, red, black)" }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <MovieIcon sx={{ display: 'flex', mr: 1 }} />
+          <MovieIcon sx={{ display: "flex", mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -65,19 +71,19 @@ function ResponsiveAppBar() {
             href="#"
             sx={{
               mr: 4,
-              display: 'flex',
+              display: "flex",
               fontWeight: 700,
-              color: 'white',
-              textDecoration: 'none',
-              whiteSpace: 'nowrap',
-              maxWidth: 'fit-content',
-              overflow: 'visible'
+              color: "white",
+              textDecoration: "none",
+              whiteSpace: "nowrap",
+              maxWidth: "fit-content",
+              overflow: "visible",
             }}
           >
             NEXTPLAY
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="menu"
@@ -91,39 +97,46 @@ function ResponsiveAppBar() {
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
               keepMounted
-              transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+              transformOrigin={{ vertical: "top", horizontal: "left" }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
+              sx={{ display: { xs: "block", md: "none" } }}
             >
-              {pages.map((page) => (
-                page === 'Genre' ? (
+              {pages.map((page) =>
+                page === "Genre" ? (
                   <MenuItem key={page} onClick={handleOpenGenreMenu}>
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
                 ) : (
-                  <MenuItem key={page} onClick={() => nav(`/${page.toLowerCase()}`)}>
+                  <MenuItem
+                    key={page}
+                    onClick={() => nav(`/${page.toLowerCase()}`)}
+                  >
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
                 )
-              ))}
+              )}
               <Menu
                 anchorEl={anchorElGenre}
                 open={Boolean(anchorElGenre)}
                 onClose={handleCloseGenreMenu}
                 sx={{
-                  '& .MuiPaper-root': {
-                    backgroundColor: 'black',
-                    color: 'white',
-                    borderRadius: '10px',
-                    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.5)',
-                  }
+                  "& .MuiPaper-root": {
+                    backgroundColor: "black",
+                    color: "white",
+                    borderRadius: "10px",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.5)",
+                  },
                 }}
               >
                 {genres.map((genre) => (
-                  <MenuItem key={genre} onClick={handleCloseGenreMenu} sx={{ '&:hover': { backgroundColor: 'red' } }}>
+                  <MenuItem
+                    key={genre}
+                    onClick={handleCloseGenreMenu}
+                    sx={{ "&:hover": { backgroundColor: "red" } }}
+                  >
                     {genre}
                   </MenuItem>
                 ))}
@@ -131,13 +144,18 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              page === 'Genre' ? (
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            {pages.map((page) =>
+              page === "Genre" ? (
                 <Button
                   key={page}
                   onClick={handleOpenGenreMenu}
-                  sx={{ my: 2, color: 'white', display: 'block', width: '150px' }}
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: "block",
+                    width: "150px",
+                  }}
                 >
                   {page}
                 </Button>
@@ -145,19 +163,29 @@ function ResponsiveAppBar() {
                 <Button
                   key={page}
                   onClick={() => nav(`/${page.toLowerCase()}`)}
-                  sx={{ my: 2, color: 'white', display: 'block', width: '150px' }}
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: "block",
+                    width: "150px",
+                  }}
                 >
                   {page}
                 </Button>
               )
-            ))}
+            )}
           </Box>
 
           <TextField
             variant="outlined"
             placeholder="Search..."
             size="small"
-            sx={{ backgroundColor: 'white', borderRadius: 2, mr: 1, boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)' }}
+            sx={{
+              backgroundColor: "white",
+              borderRadius: 2,
+              mr: 1,
+              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.3)",
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -167,7 +195,18 @@ function ResponsiveAppBar() {
             }}
           />
 
-          <Button onClick={() => nav('/login')} variant="contained" sx={{ backgroundColor: 'red', color: 'white', borderRadius: 2, boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)', mr: 1, width: '100px' }}>
+          <Button
+            onClick={() => nav("/login")}
+            variant="contained"
+            sx={{
+              backgroundColor: "red",
+              color: "white",
+              borderRadius: 2,
+              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.3)",
+              mr: 1,
+              width: "100px",
+            }}
+          >
             Login
           </Button>
 
@@ -175,7 +214,12 @@ function ResponsiveAppBar() {
             edge="end"
             color="inherit"
             onClick={toggleDrawer(true)}
-            sx={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', borderRadius: 2, padding: '8px', width: '50px' }}
+            sx={{
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+              borderRadius: 2,
+              padding: "8px",
+              width: "50px",
+            }}
           >
             <MenuIcon />
           </IconButton>
@@ -185,19 +229,27 @@ function ResponsiveAppBar() {
             open={drawerOpen}
             onClose={toggleDrawer(false)}
             sx={{
-              '& .MuiDrawer-paper': {
-                backgroundColor: 'black',
-                color: 'white',
-                padding: '20px',
-                width: '250px',
-                borderTopLeftRadius: '15px',
-                borderBottomLeftRadius: '15px'
-              }
+              "& .MuiDrawer-paper": {
+                backgroundColor: "black",
+                color: "white",
+                padding: "20px",
+                width: "250px",
+                borderTopLeftRadius: "15px",
+                borderBottomLeftRadius: "15px",
+              },
             }}
           >
             <List>
-              {['Profile', 'About Us'].map((text) => (
-                <ListItem button key={text} sx={{ '&:hover': { backgroundColor: 'red' }, borderRadius: 1, mb: 1 }}>
+              {["Profile", "About Us"].map((text) => (
+                <ListItem
+                  button
+                  key={text}
+                  sx={{
+                    "&:hover": { backgroundColor: "red" },
+                    borderRadius: 1,
+                    mb: 1,
+                  }}
+                >
                   <ListItemText primary={text} />
                 </ListItem>
               ))}
@@ -209,4 +261,4 @@ function ResponsiveAppBar() {
   );
 }
 
-export default ResponsiveAppBar;
+export default Navbar;
