@@ -8,7 +8,7 @@ const WelcomePage = () => {
         <div className="intro">
           <h2 className="name-website">
             <svg
-              className="icon-film"
+              className="icon_film"
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
@@ -25,7 +25,7 @@ const WelcomePage = () => {
           <button className="login-user">
             Login
             <svg
-              className="icon_login"
+              className="icon_logina"
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
