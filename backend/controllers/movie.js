@@ -43,7 +43,8 @@ const addMovie = (req, res) => {
 const getMovies = (req, res) => {
   const query = `SELECT 
   movies.*, 
-  movies.poster
+  movies.section,  -- Add a comma here
+  movies.poster, 
   directors.director_name AS director_name,
   writers.writer_name AS writer_name,
   genre.genre_type AS genre_name,
@@ -60,8 +61,8 @@ GROUP BY
   directors.director_name, 
   writers.writer_name, 
   genre.genre_type,
-  movies.poster
- 
+  movies.poster,
+  movies.section;
 `;
   // WHERE movies.is_deleted = 0`;
   pool

@@ -34,6 +34,8 @@ const addSeries = (req, res) => {
 const getSeries = (req, res) => {
   const query = `SELECT 
     series.*, 
+     series.section,  
+  series.poster, 
     genre.genre_type AS genre_name, 
     directors.director_name AS director_name, 
     writers.writer_name AS writer_name,
@@ -58,7 +60,9 @@ const getSeries = (req, res) => {
     episodes.title,
     episodes.episode_number,
     episodes.episode,
-    episodes.length_episode
+    episodes.length_episode,
+     series.poster,
+  series.section;
     `;
 
   pool
