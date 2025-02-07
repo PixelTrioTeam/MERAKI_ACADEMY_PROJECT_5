@@ -1,10 +1,10 @@
-.movies-container {
+.series-container {
     text-align: center;
     padding: 20px;
     width: 100%;
   }
   
-  .movies-grid {
+  .series-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr); 
     gap: 20px;
@@ -64,20 +64,20 @@
     text-align: center;
   }
   
-  .movie-title {
+  .series-title {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 5px;
   }
   
-  .movie-description {
+  .series-description {
     font-size: 10px;
     opacity: 0.8;
     margin-bottom: 10px;
     padding: 0 10px;
   }
   
-  .movie-rating {
+  .series-rating {
     font-size: 16px;
     font-weight: bold;
     color: #ffd700;
@@ -99,9 +99,4 @@
     background-color: #ff4500;
     color: white;
   }
-  .genre-title{
-    
-  }
-
-  
   
