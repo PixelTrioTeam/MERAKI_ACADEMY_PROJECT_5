@@ -3,10 +3,9 @@ import HomePage from "../pages/HomePage/HomePage";
 import Main from "../layouts/Main/index";
 import MoviesPage from "../pages/Series and movies page/moviesPage";
 
-import WelcomePage from "../pages/welcomePage/WelcomePage";
-=======
-import SeriesPage from "../pages/Series and movies page/seriesPage";
+import WelcomePage from "../pages/WelcomePage/WelcomePage";
 
+import SeriesPage from "../pages/Series and movies page/seriesPage";
 
 const router = createBrowserRouter([
   {
@@ -28,9 +27,9 @@ const router = createBrowserRouter([
     element: <MoviesPage />,
   },
   {
-    path : '/series',
-    element : <SeriesPage/>
-  }
+    path: "/series",
+    element: <SeriesPage />,
+  },
 ]);
 
 export default router;
