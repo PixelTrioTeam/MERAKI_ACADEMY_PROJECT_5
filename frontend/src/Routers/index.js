@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../pages/HomePage/HomePage";
 import Main from "../layouts/Main/index";
 import MoviesPage from "../pages/Series and movies page/moviesPage";
+import SeriesPage from "../pages/Series and movies page/seriesPage";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
     path: "/movies",
     element: <MoviesPage />,
   },
+  {
+    path : '/series',
+    element : <SeriesPage/>
+  }
 ]);
 
 export default router;
