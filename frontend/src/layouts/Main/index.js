@@ -4,7 +4,7 @@ import Navbar from "../../components/Navbar/navBar";
 export default function Main (){
     return(
         <div>
-            <header>
+            <header style={{width : '1536px'}}>
                 <Navbar/>
             </header>
             <main>
