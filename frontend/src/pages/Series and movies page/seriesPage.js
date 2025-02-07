@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { setSeries } from '../../Service/redux/reducers/series/seriesSlice';
+import { setSeries } from "../../service/redux/reducers/series/seriesSlice";
 import "./series.css";
 import { useNavigate } from "react-router-dom";
 
@@ -29,22 +29,33 @@ const SeriesPage = () => {
           <h2>{genre}</h2>
           <div className="series-grid">
             {series.length > 0 ? (
-              series.filter(show => show.genre_name === genre).map((show) => (
-                <div className="flip-card" key={show.id}>
-                  <div className="flip-card-inner">
-                    <div className="flip-card-front">
-                      <img src={show.poster} alt={show.title} className="series-image" />
-                    </div>
+              series
+                .filter((show) => show.genre_name === genre)
+                .map((show) => (
+                  <div className="flip-card" key={show.id}>
+                    <div className="flip-card-inner">
+                      <div className="flip-card-front">
+                        <img
+                          src={show.poster}
+                          alt={show.title}
+                          className="series-image"
+                        />
+                      </div>
 
-                    <div className="flip-card-back">
-                      <h2 className="series-title">{show.title}</h2>
-                      <p className="series-description">{show.description}</p>
-                      <p className="series-rating">⭐ {show.rate}/10</p>
-                      <button className="more-button" onClick={() => navigate(`/series/${show.id}`)}>More</button>
+                      <div className="flip-card-back">
+                        <h2 className="series-title">{show.title}</h2>
+                        <p className="series-description">{show.description}</p>
+                        <p className="series-rating">⭐ {show.rate}/10</p>
+                        <button
+                          className="more-button"
+                          onClick={() => navigate(`/series/${show.id}`)}
+                        >
+                          More
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
+                ))
             ) : (
               <p>Loading...</p>
             )}
