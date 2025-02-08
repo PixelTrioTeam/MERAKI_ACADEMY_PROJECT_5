@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { setSeries } from "../../service/redux/reducers/series/seriesSlice";
+import { setSeries } from "../../Service/redux/reducers/series/seriesSlice";
 import "./series.css";
 import { useNavigate } from "react-router-dom";
 
