@@ -1,0 +1,100 @@
+.background-image-register {
+  background-image: url("../../assets/img/homePhoto.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-container {
+    background-color: rgb(30, 19, 19);
+    padding: 40px;
+    border-radius: 2.8em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 380px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+.sign_up {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    border-radius: 10px;
+    color: black;
+    background-color: rgba(255, 251, 251, 0.851);
+}
+.sign_up:hover {
+  cursor: pointer;
+  background-color: #0056b3;
+  color: white;
+}
+
+input {
+  padding: 5px;
+  margin: 1px 0;
+  border: 1px solid #ccc;
+  border-radius: 9px;
+}
+.input-register {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    border-radius: 10px;
+    color: black;
+    background-color: rgba(255, 251, 251, 0.851);
+}
+.sign-h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+
+.back_navbar {
+    background-color: transparent;
+    border: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    text-decoration: underline;
+    color:rgba(52, 52, 198, 0.83);
+  }
+  .back_navbar:hover {
+    cursor: pointer;
+    text-decoration: none;
+    color:blue;
+  }
+  
+
+.success {
+  background-color: rgba(0, 128, 0, 0.873);
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 10px;
+  border: none;
+  border-radius: 9px;
+}
+.failed {
+  background-color: red;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 10px;
+  border: none;
+  border-radius: 9px;
+}

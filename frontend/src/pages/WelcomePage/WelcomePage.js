@@ -1,7 +1,8 @@
 import React from "react";
 import "./selPage.css";
-import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
 const WelcomePage = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="background-img">
@@ -22,7 +23,12 @@ const WelcomePage = () => {
             </svg>{" "}
             NEXTPLAY
           </h2>
-          <button className="login-user">
+          <button
+            className="login-user"
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
             Login
             <svg
               className="icon_logina"
