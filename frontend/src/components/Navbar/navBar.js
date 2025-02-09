@@ -13,22 +13,36 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import MovieIcon from "@mui/icons-material/Movie";
 import MenuItem from "@mui/material/MenuItem";
-
+import axios from "axios";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import "./navBar.css";
 import { useNavigate } from "react-router-dom";
-
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setGenre } from "../../service/redux/reducers/genre/genreSlice";
 const pages = ["Movies", "Series", "Genre"];
-const genres = ["Action", "Comedy", "Drama", "Horror", "Sci-Fi"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElGenre, setAnchorElGenre] = React.useState(null);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const nav = useNavigate();
+  const dispatch = useDispatch();
+  const genres = useSelector((state) => state.genre.genre);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/movie/genre")
+      .then((res) => {
+        console.log("Genres API Response:", res.data.result);
+
+        dispatch(setGenre(res.data.result));
+      })
+      .catch((error) => console.error("Error fetching genres", error));
+  }, [dispatch]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -133,11 +147,17 @@ function Navbar() {
               >
                 {genres.map((genre) => (
                   <MenuItem
-                    key={genre}
-                    onClick={handleCloseGenreMenu}
+                    key={genre.id}
+                    onClick={() => {
+                      nav(
+                        `/genre/${genre.genre_type.toLowerCase()}/${genre.id}`
+                      );
+                      handleCloseGenreMenu();
+                    }}
                     sx={{ "&:hover": { backgroundColor: "red" } }}
                   >
-                    {genre}
+                    {console.log(genre.genre_type)}
+                    {genre.genre_type}
                   </MenuItem>
                 ))}
               </Menu>

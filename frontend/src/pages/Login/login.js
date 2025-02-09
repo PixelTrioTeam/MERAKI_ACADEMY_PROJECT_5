@@ -136,9 +136,6 @@ const Login = () => {
               Click Here
             </Link>
           </span>
-          {/* {message && (
-          <h3 className={success ? "success" : "failed"}>{message}!!</h3>
-        )} */}
         </form>{" "}
       </div>
     </div>

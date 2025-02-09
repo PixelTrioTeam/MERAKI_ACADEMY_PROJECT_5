@@ -10,8 +10,12 @@ const moviesSlice = createSlice({
       state.movies = action.payload;
       console.log(action.payload);
     },
+    setMoviesByGenreId: (state, action) => {
+      state.movies = action.payload;
+      console.log("Movies by Genre:", action.payload);
+    },
   },
 });
 
-export const { setMovies } = moviesSlice.actions;
+export const { setMovies, setMoviesByGenreId } = moviesSlice.actions;
 export default moviesSlice.reducer;
