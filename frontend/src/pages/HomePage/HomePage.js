@@ -42,9 +42,9 @@ const HomePage = () => {
           movies.slice(0, 5).map((movie) => (
             <Carousel.Item key={movie.id}>
               <div className="carousel-item-container">
-                <div className="background-container">
+                <div className="backgroundd-container">
                   <img
-                    className="Slider-img background-img"
+                    className="Slider-img backgroundd-img"
                     src={movie.poster}
                     alt={movie.title}
                   />
