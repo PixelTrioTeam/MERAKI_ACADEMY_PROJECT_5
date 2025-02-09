@@ -1,12 +1,12 @@
-/* Main Dashboard Layout */
+
 .admin-dashboard {
   display: flex;
   min-height: 100vh;
-  flex-direction: row; /* Ensure layout stays row-based by default */
-  position: relative; /* Ensure absolute positioning inside flex */
+  flex-direction: row; 
+  position: relative; 
 }
 
-/* Sidebar Styling */
+
 .sidebar {
   width: 250px;
   height: 100vh;
@@ -17,7 +17,7 @@
   top: 0;
   left: 0;
   overflow-y: auto;
-  z-index: 1000; /* Ensure sidebar stays on top */
+  z-index: 1000; 
 }
 
 .sidebar h2 {
@@ -45,7 +45,7 @@
   padding-left: 15px;
 }
 
-/* Main Content Area */
+
 .main-content {
   flex-grow: 1;
   margin-left: 250px;
@@ -54,7 +54,7 @@
   overflow-x: hidden;
 }
 
-/* Header Styling */
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -85,7 +85,7 @@
   background-color: #e04e2e;
 }
 
-/* Stats Section */
+
 .stats {
   display: flex;
   justify-content: space-between;
@@ -117,7 +117,7 @@
   color: #333;
 }
 
-/* Make sure the page is responsive */
+
 @media (max-width: 768px) {
   .admin-dashboard {
     flex-direction: column;
