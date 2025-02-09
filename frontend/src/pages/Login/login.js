@@ -17,16 +17,16 @@ const Login = () => {
     };
   });
   // access the token and userId and isLoggedIn
-  const token = state.authReducer.token;
-  const userId = state.authReducer.userId;
-  const isLoggedIn = state.authReducer.isLoggedIn;
+  // const token = state.authReducer.token;
+  // const userId = state.authReducer.userId;
+  // const isLoggedIn = state.authReducer.isLoggedIn;
 
   // declare status
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState(false);
-  const nav = useNavigate();
+  // const nav = useNavigate();
 
   // login user
   const login = async (e) => {
@@ -54,11 +54,12 @@ const Login = () => {
   };
 
   // if access to login navigate to movies
-  useEffect(() => {
-    if (isLoggedIn) {
-      nav("/main");
-    }
-  });
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     nav("/main");
+  //   }
+  // });
+  const [hide, setHide] = useState(true);
 
   // show and hide password
   const [showPassword, setShowPassword] = useState(false);
@@ -81,7 +82,7 @@ const Login = () => {
             className="input-login"
             type="email"
             placeholder="Email"
-            // required
+            required
           />{" "}
           <div className="input-wrapper">
             <input
@@ -91,28 +92,46 @@ const Login = () => {
               className="input-login"
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              // required
+              required
             />{" "}
             <span
               className="bi bi-unlock-fill"
               onClick={togglePasswordVisibility}
               role="button"
             >
-              <svg
-                className="bi bi-unlock-fill"
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-unlock-fill"
-                viewBox="0 0 16 16"
-              >
-                <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2" />
-              </svg>
+              {hide && (
+                <svg
+                  className="bi bi-unlock-fill"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-unlock-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2" />
+                </svg>
+              )}
+
               {showPassword ? (
-                <i className="fa fa-eye-slash" aria-hidden="true"></i>
+                <>
+                  {/* <i  className="fa fa-eye-slash" aria-hidden="true">Hide</i> */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-lock"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1" />
+                  </svg>{" "}
+                  <i onClick={() => setHide(!hide)}>Hide</i>
+                </>
               ) : (
-                <i className="fa fa-eye" aria-hidden="true"></i>
+                <i className="fa fa-eye" aria-hidden="true">
+                  Show
+                </i>
               )}
             </span>
           </div>
@@ -136,9 +155,6 @@ const Login = () => {
               Click Here
             </Link>
           </span>
-          {/* {message && (
-          <h3 className={success ? "success" : "failed"}>{message}!!</h3>
-        )} */}
         </form>{" "}
       </div>
     </div>

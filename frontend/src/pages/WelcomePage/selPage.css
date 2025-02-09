@@ -17,9 +17,9 @@
   margin-left: 1.5em;
   display: flex;
 }
-.icon_film {
+.icon_name {
   margin-top: 0.2em;
-  margin-right: 0.2em;
+  margin-right: 0.1em;
   color: white;
   font-size: 1.9em;
 }
@@ -45,12 +45,12 @@
   background-color: rgba(255, 0, 0, 0.718);
   color: white;
 }
-.icon_logina {
+.icon_login {
   margin-left: 0.3em;
   color: rgb(255, 255, 255);
-  font-size: 20px;
+  font-size: 1em;
 }
-.icon_logina:hover {
+.icon_login:hover {
   cursor: pointer;
   color: rgb(255, 255, 255);
 }
