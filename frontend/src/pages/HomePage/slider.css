@@ -1,3 +1,5 @@
+/* Updated CSS with fixed selectors */
+
 body {
   font-family: 'Arial', sans-serif;
   background-color: #131313;
@@ -24,7 +26,7 @@ a {
 }
 
 .Slider-img:hover {
-  transform: scale(1.05); 
+  transform: scale(1.05);
 }
 
 .flexSlider {
@@ -54,7 +56,7 @@ a {
 
 .carousel-control-prev-icon:hover,
 .carousel-control-next-icon:hover {
-  background-color: rgba(255, 87, 51, 0.7); 
+  background-color: rgba(255, 87, 51, 0.7);
 }
 
 .carousel-description {
@@ -145,7 +147,7 @@ h2 {
 }
 
 .movie-card img:hover {
-  transform: scale(1.1); 
+  transform: scale(1.1);
 }
 
 .movie-card h3 {
@@ -179,7 +181,6 @@ h2 {
   color: #ffd700;
 }
 
-/* Responsive styling */
 @media (max-width: 768px) {
   .movie-card {
     width: calc(50% - 20px);
@@ -208,7 +209,7 @@ h2 {
 
 .carousel-item-container {
   position: relative;
-  height: 500px; 
+  height: 500px;
 }
 
 .background-container {
@@ -217,10 +218,10 @@ h2 {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1; 
+  z-index: 1;
 }
 
-.background-img {
+.backgroundd-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -244,18 +245,18 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 30%; 
+  width: 30%;
 }
 
 .small-poster-img {
-  width: 250px; 
-  height: 375px; 
+  width: 300px;
+  height: 400px;
   object-fit: cover;
   border-radius: 10px;
 }
 
 .movie-info {
-  width: 65%; 
+  width: 70%;
 }
 
 .description-text {
@@ -293,7 +294,6 @@ h3 {
   font-style: italic;
 }
 
-
 @media (max-width: 768px) {
   .carousel-content {
     flex-direction: column;
@@ -302,16 +302,15 @@ h3 {
   }
 
   .poster-left {
-    width: 50%;
+    width: 80%;
   }
 
   .small-poster-img {
-    width: 250px; 
-    height: 375px; 
+    width: 250px;
+    height: 375px;
     object-fit: cover;
     border-radius: 10px;
   }
-  
 
   .movie-info {
     width: 100%;
@@ -319,12 +318,12 @@ h3 {
 }
 
 .watch-now-link {
-  color: #ff5733; 
+  color: #ff5733;
   font-size: 1.2rem;
   font-weight: bold;
   text-decoration: none;
   margin-top: 20px;
-  display: inline-block; 
+  display: inline-block;
   padding: 10px 20px;
   border-radius: 25px;
   transition: background-color 0.3s ease, color 0.3s ease;

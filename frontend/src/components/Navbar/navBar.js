@@ -260,10 +260,15 @@ function Navbar() {
             }}
           >
             <List>
-              {["Profile", "About Us"].map((text) => (
+              {["Profile", "About Us", "Admin Dashboard"].map((text) => (
                 <ListItem
                   button
                   key={text}
+                  onClick={() => {
+                    if (text === "Admin Dashboard") {
+                      nav("/admin-dashboard");
+                    }
+                  }}
                   sx={{
                     "&:hover": { backgroundColor: "red" },
                     borderRadius: 1,
