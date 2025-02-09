@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { setMovies } from "../../Service/redux/reducers/movies/movieSlice";
+import { setMovies } from "../../service/redux/reducers/movies/movieSlice";
 import { useNavigate } from "react-router-dom";
 import "./movies.css";
 
