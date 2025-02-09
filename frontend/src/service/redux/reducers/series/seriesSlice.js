@@ -10,8 +10,11 @@ const seriesSlice = createSlice({
       state.series = action.payload;
       console.log(action.payload);
     },
+    setSeriesByGenreId: (state, action) => {
+      state.series = action.payload;
+    },
   },
 });
 
-export const { setSeries } = seriesSlice.actions;
+export const { setSeries, setSeriesByGenreId } = seriesSlice.actions;
 export default seriesSlice.reducer;

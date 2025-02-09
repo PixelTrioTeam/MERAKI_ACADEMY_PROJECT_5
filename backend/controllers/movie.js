@@ -43,7 +43,7 @@ const addMovie = (req, res) => {
 const getMovies = (req, res) => {
   const query = `SELECT 
   movies.*, 
-  movies.section,  -- Add a comma here
+  movies.section,  
   movies.poster, 
   directors.director_name AS director_name,
   writers.writer_name AS writer_name,
@@ -266,6 +266,34 @@ const getMovieByGenreId = (req, res) => {
     });
 };
 
+const getGenreById = (req, res) => {
+  const query = `SELECT * FROM genre `;
+
+  pool
+    .query(query)
+    .then((result) => {
+      if (result.rowCount === 0) {
+        return res.status(404).json({
+          success: false,
+          message: `No genre found `,
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        message: `Genre retrieved successfully`,
+        result: result.rows,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Error retrieving genre",
+        error: err.message,
+      });
+    });
+};
+
 module.exports = {
   addMovie,
   getMovies,
@@ -275,4 +303,5 @@ module.exports = {
   getMoviesByWriterId,
   getMovieById,
   getMovieByGenreId,
+  getGenreById,
 };

@@ -8,6 +8,7 @@ import WelcomePage from "../pages/WelcomePage/WelcomePage";
 import SeriesPage from "../pages/Series and movies page/seriesPage";
 import Login from "../pages/Login/login";
 import Register from "../pages/register/register";
+import MovieByGenre from "../pages/MovieByGenrePage/MovieByGenre";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "/series",
     element: <SeriesPage />,
+  },
+  {
+    path: "/genre/:genreType/:genreId",
+    element: <MovieByGenre />,
   },
   {
     path: "/login",
