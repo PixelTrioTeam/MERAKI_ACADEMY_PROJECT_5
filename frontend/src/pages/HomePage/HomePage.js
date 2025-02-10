@@ -4,8 +4,8 @@ import Carousel from "react-bootstrap/Carousel";
 import "./slider.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { setMovies } from "../../Service/redux/reducers/movies/movieSlice";
-import { setSeries } from "../../Service/redux/reducers/series/seriesSlice";
+import { setMovies } from "../../service/redux/reducers/movies/movieSlice";
+import { setSeries } from "../../service/redux/reducers/series/seriesSlice";
 import { Modal, Button } from "react-bootstrap";
 
 

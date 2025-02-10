@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setMoviesByGenreId } from "../../Service/redux/reducers/movies/movieSlice";
-import { setSeriesByGenreId } from "../../Service/redux/reducers/series/seriesSlice";
+import { setMoviesByGenreId } from "../../service/redux/reducers/movies/movieSlice";
+import { setSeriesByGenreId } from "../../service/redux/reducers/series/seriesSlice";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
 

@@ -22,7 +22,7 @@ import "./navBar.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setGenre } from "../../Service/redux/reducers/genre/genreSlice";
+import { setGenre } from "../../service/redux/reducers/genre/genreSlice";
 const pages = ["Movies", "Series", "Genre"];
 
 function Navbar() {
