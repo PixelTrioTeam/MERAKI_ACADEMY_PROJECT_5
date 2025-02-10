@@ -42,11 +42,13 @@ const MovieModal = ({ show, onHide, movie }) => {
           ) : (
             <video src={movie.trailer} controls autoPlay style={{ width: "100%" }}></video>
           )}
+          <div>
           <h4 className="modal-movie-title">{movie.title}</h4>
           <h4 className="modal-movie-description">{movie.genre_name}</h4>
           <h4 className="modal-movie-description">{movie.rate}</h4>
           <h4 className="modal-movie-description">{movie.writer_name}</h4>
           <p className="modal-movie-description">{movie.description}</p>
+          </div>
           <Modal.Footer>
             {movie.trailer && (
               <Button

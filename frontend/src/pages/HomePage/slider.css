@@ -22,7 +22,6 @@ a {
   height: 500px;
   object-fit: cover;
   border-radius: 10px;
-  margin-left: 200px;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -49,7 +48,7 @@ a {
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   background-color: rgba(0, 0, 0, 0.7);
-  /* border-radius: 50%; */
+  border-radius: 50%;
   width: 40px;
   height: 40px;
   transition: background-color 0.3s;
@@ -61,7 +60,7 @@ a {
 }
 
 .carousel-description {
-  position: relative;
+  position: absolute;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
@@ -71,17 +70,15 @@ a {
   padding: 20px;
   border-radius: 10px;
   width: 80%;
-  margin-left: 100px;
   max-width: 400px;
   font-size: 1.4rem;
   letter-spacing: 1px;
-} 
+}
 
 .description-text {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 10px;
-  background-color: red;
 }
 
 .actors-text {

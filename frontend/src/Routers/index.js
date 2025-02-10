@@ -8,6 +8,7 @@ import Login from "../pages/Login/login";
 import Register from "../pages/register/register";
 import MovieByGenre from "../pages/MovieByGenrePage/MovieByGenre";
 import DashAdmin from "../pages/dashboard.Admin/dashAdmin";
+import Navbar from "../components/Navbar/navBar";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,16 +25,44 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/movies",
-    element: <MoviesPage />,
+    path : '/movies',
+    element : <Main/>,
+    children : [
+      {
+        path : '',
+        element : <MoviesPage/>
+      }
+    ]
   },
+  // {
+  //   path: "/movies",
+  //   element: <MoviesPage />,
+  //   children : [
+  //     {
+  //       path : "",
+  //       element : <Navbar/>
+  //     }
+  //   ]
+  // },
   {
-    path: "/series",
-    element: <SeriesPage />,
+    path : '/series',
+    element : <Main/>,
+    children : [
+      {
+        path : '',
+        element : <SeriesPage/>
+      }
+    ]
   },
   {
     path: "/genre/:genreType/:genreId",
-    element: <MovieByGenre />,
+    element: <Main/>,
+    children : [
+      {
+        path : '',
+        element : <MovieByGenre/>
+      }
+    ]
   },
   {
     path: "/login",
@@ -45,7 +74,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin-dashboard",
-    element: <DashAdmin />,
+    element: <Main />,
+    children : [{
+      path : '',
+      element : <DashAdmin/>
+    }]
   },
 ]);
 

@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setGenre } from "../../service/redux/reducers/genre/genreSlice";
-const pages = ["Movies", "Series", "Genre"];
+const pages = ["Home","Movies", "Series", "Genre"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -183,7 +183,12 @@ function Navbar() {
               ) : (
                 <Button
                   key={page}
-                  onClick={() => nav(`/${page.toLowerCase()}`)}
+                  onClick={() =>
+                    {if(page === 'Home'){
+                      nav('/Main')
+                    }else{
+                    nav(`/${page.toLowerCase()}`)}
+                  }}
                   sx={{
                     my: 2,
                     color: "white",
