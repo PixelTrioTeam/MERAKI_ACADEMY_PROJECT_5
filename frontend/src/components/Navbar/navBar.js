@@ -134,7 +134,24 @@ function Navbar() {
                 {genres.map((genre) => (
                   <MenuItem
                     key={genre}
-                    onClick={handleCloseGenreMenu}
+                    onClick={()=>{
+                      let id = 0
+                      if(genre === 'Action'){
+                        id = 3
+                      }else if(genre === 'Drama'){
+                        id = 2
+                      }else if(genre === 'Sci-Fi'){
+                        id = 1
+                      }else if(genre === 'Comedy'){
+                        id = 5
+                      }else if(genre === 'Horror'){
+                        id = 4
+                      }
+                      nav(`/genre/${genre}/${id}`)
+                      handleCloseGenreMenu()
+                      
+                    }  
+                    }
                     sx={{ "&:hover": { backgroundColor: "red" } }}
                   >
                     {genre}
