@@ -156,6 +156,7 @@ function Navbar() {
                     }}
                     sx={{ "&:hover": { backgroundColor: "red" } }}
                   >
+                    {/* git */}
                     {console.log(genre.genre_type)}
                     {genre.genre_type}
                   </MenuItem>
