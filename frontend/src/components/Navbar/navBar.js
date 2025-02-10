@@ -156,6 +156,7 @@ function Navbar() {
                     }}
                     sx={{ "&:hover": { backgroundColor: "red" } }}
                   >
+                    {/* git */}
                     {console.log(genre.genre_type)}
                     {genre.genre_type}
                   </MenuItem>
@@ -264,7 +265,15 @@ function Navbar() {
                 <ListItem
                   button
                   key={text}
+
                  
+
+                  onClick={() => {
+                    if (text === "Admin Dashboard") {
+                      nav(`/admin-dashboard`);
+                    }
+                  }}
+
                   sx={{
                     "&:hover": { backgroundColor: "red" },
                     borderRadius: 1,
