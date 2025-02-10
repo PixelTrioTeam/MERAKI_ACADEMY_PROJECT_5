@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+
 import { setMovies } from "../../Service/redux/reducers/movies/movieSlice";
 import { Modal, Button } from "react-bootstrap";
+
+
+import { useNavigate } from "react-router-dom";
+
 import "./movies.css";
 
 const MovieModal = ({ show, onHide, movie }) => {

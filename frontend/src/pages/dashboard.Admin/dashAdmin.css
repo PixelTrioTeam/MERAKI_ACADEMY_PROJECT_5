@@ -1,0 +1,146 @@
+
+.admin-dashboard {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: row; 
+  position: relative; 
+}
+
+
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  z-index: 1000; 
+}
+
+.sidebar h2 {
+  color: #fff;
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  color: #fff;
+  font-size: 18px;
+  margin: 15px 0;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.sidebar ul li:hover {
+  background-color: #444;
+  padding-left: 15px;
+}
+
+
+.main-content {
+  flex-grow: 1;
+  margin-left: 250px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  overflow-x: hidden;
+}
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f4f4f4;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.header button {
+  background-color: #ff5733;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.header button:hover {
+  background-color: #e04e2e;
+}
+
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.stat-card {
+  background-color: #fff;
+  padding: 20px;
+  width: 30%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.stat-card:hover {
+  transform: translateY(-10px);
+}
+
+.stat-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.stat-card p {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+
+@media (max-width: 768px) {
+  .admin-dashboard {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .stats {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-card {
+    width: 80%;
+    margin: 10px 0;
+  }
+}
