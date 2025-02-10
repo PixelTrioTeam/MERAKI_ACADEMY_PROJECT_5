@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
-import { setMovies } from "../../Service/redux/reducers/movies/movieSlice";
+import { setMovies } from "../../service/redux/reducers/movies/movieSlice";
 import { Modal, Button } from "react-bootstrap";
 
 import "./movies.css";
