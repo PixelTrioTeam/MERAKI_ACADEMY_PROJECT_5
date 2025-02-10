@@ -19,14 +19,14 @@ const Login = () => {
   // access the token and userId and isLoggedIn
   // const token = state.authReducer.token;
   // const userId = state.authReducer.userId;
-  // const isLoggedIn = state.authReducer.isLoggedIn;
+  const isLoggedIn = state.authReducer.isLoggedIn;
 
   // declare status
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState(false);
-  // const nav = useNavigate();
+  const nav = useNavigate();
 
   // login user
   const login = async (e) => {
@@ -44,6 +44,9 @@ const Login = () => {
         localStorage.setItem("userId", result.data.userId);
         dispatch(setLogin(result.data.token));
         dispatch(setUserId(result.data.userId));
+        if (isLoggedIn) {
+          nav("/main");
+        }
       } else throw Error;
     } catch (error) {
       if (error.response && error.response.data) {
