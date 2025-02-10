@@ -22,7 +22,7 @@ import "./navBar.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setGenre } from "../../service/redux/reducers/genre/genreSlice";
+import { setGenre } from "../../Service/redux/reducers/genre/genreSlice";
 const pages = ["Movies", "Series", "Genre"];
 
 function Navbar() {
@@ -126,7 +126,7 @@ function Navbar() {
                 ) : (
                   <MenuItem
                     key={page}
-                    onClick={() => nav(`/${page.toLowerCase()}`)}
+                    // onClick={() => nav(/${page.toLowerCase()})}
                   >
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
@@ -145,18 +145,8 @@ function Navbar() {
                   },
                 }}
               >
-                {genres.map((genre) => (
+              {genres.map((genre) => (
                   <MenuItem
-
-                    key={genre}
-                    onClick={()=>{
-                     
-                      nav(`/genre/)
-                      handleCloseGenreMenu()
-                      
-                    }  
-                    }
-
                     key={genre.id}
                     onClick={() => {
                       nav(
@@ -164,7 +154,6 @@ function Navbar() {
                       );
                       handleCloseGenreMenu();
                     }}
-
                     sx={{ "&:hover": { backgroundColor: "red" } }}
                   >
                     {/* git */}
@@ -272,15 +261,19 @@ function Navbar() {
             }}
           >
             <List>
-              {["Profile", "About Us", "Admin Dashboard"].map((text) => (
+              {["Profile", "About Us"].map((text) => (
                 <ListItem
                   button
                   key={text}
+
+                 
+
                   onClick={() => {
                     if (text === "Admin Dashboard") {
                       nav(`/admin-dashboard`);
                     }
                   }}
+
                   sx={{
                     "&:hover": { backgroundColor: "red" },
                     borderRadius: 1,
@@ -290,6 +283,20 @@ function Navbar() {
                   <ListItemText primary={text} />
                 </ListItem>
               ))}
+               { (
+                <ListItem
+                  button
+                  key="Admin Dashboard"
+                  onClick={() => nav("/admin-dashboard")}
+                  sx={{
+                    "&:hover": { backgroundColor: "red" },
+                    borderRadius: 1,
+                    mb: 1,
+                  }}
+                >
+                  <ListItemText primary="Admin Dashboard" />
+                </ListItem>
+              )}
             </List>
           </Drawer>
         </Toolbar>
