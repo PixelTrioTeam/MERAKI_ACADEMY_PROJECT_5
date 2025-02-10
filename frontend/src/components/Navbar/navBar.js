@@ -266,7 +266,7 @@ function Navbar() {
                   key={text}
                   onClick={() => {
                     if (text === "Admin Dashboard") {
-                      nav("/admin-dashboard");
+                      nav(`/admin-dashboard`);
                     }
                   }}
                   sx={{
