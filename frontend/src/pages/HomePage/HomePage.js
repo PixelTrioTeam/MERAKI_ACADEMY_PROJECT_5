@@ -236,7 +236,96 @@ const HomePage = () => {
               )}
             </div>
           </div>
+          
         </div>
+        <div>
+          <div className="movies-container">
+            <h2>Top 10 in Jordan</h2>
+            <div className="movies-grid">
+              {movies.length > 0 ? (
+                movies.map((movie) =>
+                  movie.section === "Jordan" ? (
+                    <div className="flip-card" key={movie.id}
+                    onClick={()=>{
+                      setSelectedMovie(movie);
+                      setModalShow(true)
+                    }} 
+                    >
+                      <div className="flip-card-inner">
+                        <div className="flip-card-front">
+                          <img
+                            src={movie.poster}
+                            alt={movie.title}
+                            className="movie-image"
+                          />
+                        </div>
+                        {console.log(movie)}
+
+                        <div className="flip-card-back">
+                          <h2 className="movie-title">{movie.title}</h2>
+                          <p className="movie-description">
+                            {movie.description}
+                          </p>
+                          <p className="movie-actors">{movie.actor_names}</p>
+                          <p className="movie-director">
+                            {movie.director_name}
+                          </p>
+                          <p className="movie-rating">⭐ {movie.rate}/10</p>
+                        </div>
+                      </div>
+                    </div>
+                  ) : null
+                )
+              ) : (
+                <p>Loading...</p>
+              )}
+            </div>
+          </div>
+
+          <div className="movies-container">
+            <h2>Coming Soon</h2>
+            <div className="movies-grid">
+              {movies.length > 0 ? (
+                movies.map((movie) =>
+                  movie.section === "Soon" ? (
+                    <div className="flip-card" key={movie.id}
+                    onClick={()=>{
+                      setSelectedMovie(movie);
+                      setModalShow(true)
+                    }} 
+                    >
+                      <div className="flip-card-inner">
+                        <div className="flip-card-front">
+                          <img
+                            src={movie.poster}
+                            alt={movie.title}
+                            className="movie-image"
+                          />
+                        </div>
+                        {console.log(movie)}
+
+                        <div className="flip-card-back">
+                          <h2 className="movie-title">{movie.title}</h2>
+                          <p className="movie-description">
+                            {movie.description}
+                          </p>
+                          <p className="movie-actors">{movie.actor_names}</p>
+                          <p className="movie-director">
+                            {movie.director_name}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ) : null
+                )
+              ) : (
+                <p>Loading...</p>
+              )}
+            </div>
+          </div>
+          
+        </div>
+        
         <MovieModal show={modalShow} onHide={() => setModalShow(false)} movie={selectedMovie} />
       </div>
     </>
