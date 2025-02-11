@@ -8,7 +8,9 @@ import Login from "../pages/Login/login";
 import Register from "../pages/register/register";
 import MovieByGenre from "../pages/MovieByGenrePage/MovieByGenre";
 import DashAdmin from "../pages/dashboard.Admin/dashAdmin";
-import Navbar from "../components/Navbar/navBar";
+import SecondaryNav from "../components/Navbar/navBar";
+import BasicTable from '../pages/dashboard.Admin/BasicTable'
+import DrawerAppBar from '../pages/dashboard.Admin/adminNav'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -75,9 +77,11 @@ const router = createBrowserRouter([
   {
     path: "/admin-dashboard",
     element: <Main />,
-    children : [{
+    children : [
+      
+      {
       path : '',
-      element : <DashAdmin/>
+      element : <BasicTable/>
     }]
   },
 ]);

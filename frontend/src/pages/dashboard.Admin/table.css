@@ -1,0 +1,23 @@
+.tableContainer{
+    margin-top: 100px;
+    border-radius: 25px;
+    background: linear-gradient(to right, rgba(255, 0, 0, 0.704), black);
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.tableContainer h4{
+    color: white;
+
+}
+.tableContainer h6{
+    color: white;
+}
+.removeUser{
+    width: 100px;
+}
+/* .headers{
+    color: antiquewhite;
+} */
+ .tableContainer Button{
+    width: 100px;
+ }
