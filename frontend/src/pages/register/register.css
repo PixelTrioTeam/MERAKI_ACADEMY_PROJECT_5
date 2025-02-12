@@ -73,6 +73,10 @@ input {
   color: black;
   background-color: rgba(255, 251, 251, 0.851);
 }
+.input-register:hover{
+  cursor: pointer;
+  background-color: white;
+}
 .sign-h3 {
   text-align: center;
   margin-bottom: 20px;

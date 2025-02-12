@@ -1,10 +1,24 @@
 import { useState, useContext } from "react";
 import axios from "axios";
-
+import { GoogleLogin } from "@react-oauth/google";
 import { Link } from "react-router-dom";
 import "./register.css";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setLogin,
+  setUserId,
+} from "../../service/redux/reducers/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 const Register = () => {
+  const dispatch = useDispatch();
+  // state reducer
+  const state = useSelector((reducer) => {
+    return {
+      authReducer: reducer.authReducer,
+    };
+  });
+  const isLoggedIn = state.authReducer.isLoggedIn;
+  const nav = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [country, setCountry] = useState("");
@@ -12,7 +26,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(false);
-
+  const [showGoogleLogin, setShowGoogleLogin] = useState(false);
   // function register
   const addNewUser = async (e) => {
     e.preventDefault();
@@ -35,6 +49,45 @@ const Register = () => {
       }
       setMessage("Error happened while register, please try again");
     }
+  };
+
+  const clientId =
+    "583658858550-mc1n9c3ha94v9n87ifut6kfdi4aanh2d.apps.googleusercontent.com";
+
+  // sign up with google
+  const handleLoginSuccess = async (response) => {
+    // Here you will get the token and other user info
+    console.log("Login successful:", response);
+    // You can now send this token to your server for further processing (like creating a new user in your database)
+    const token = response.credential;
+
+    try {
+      const result = await axios.post(
+        `http://localhost:5000/user/loginGoogle`,
+        { token: token },
+        {
+          header: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (result.data) {
+        setMessage("");
+        localStorage.setItem("token", result.data.token);
+        localStorage.setItem("userId", result.data.userId);
+        dispatch(setLogin(result.data.token));
+        dispatch(setUserId(result.data.userId));
+        if (isLoggedIn) {
+          nav("/main");
+        }
+      } else throw Error;
+    } catch (error) {
+      console.log("error during login : ", error);
+    }
+  };
+
+  const handleLoginFailure = (error) => {
+    console.error("Login failed:", error);
   };
   return (
     <>
@@ -92,8 +145,14 @@ const Register = () => {
                 Sign Up{" "}
               </button>
               <br />
-              <button className="sign_up_google" onClick={(e) => addNewUser(e)}>
-                Sign In With Google{" "}
+              <button
+                className="sign_up_google"
+                onClick={() => {
+                  console.log("hi");
+                  setShowGoogleLogin(true);
+                }}
+              >
+                Sign Up With Google{" "}
                 <svg
                   className="icon_google"
                   xmlns="http://www.w3.org/2000/svg"
@@ -110,13 +169,22 @@ const Register = () => {
                 ? message && <div className="SuccessMessage">{message}</div>
                 : message && <div className="ErrorMessage">{message}</div>}
               <br />
+              {showGoogleLogin && (
+                <GoogleLogin
+                  clientId={clientId}
+                  buttonText="Login"
+                  onSuccess={handleLoginSuccess}
+                  onError={handleLoginFailure}
+                  isLoggedIn={true}
+                />
+              )}
               <span style={{ fontFamily: "arial" }}>
                 Return To The Home Page?
                 <Link className="back_navbar" to={"/"}>
                   Click Here
                 </Link>
               </span>
-              <br/>
+              <br />
               <span style={{ fontFamily: "arial" }}>
                 You Have Any Account?
                 <Link className="back_navbar" to={"/login"}>
