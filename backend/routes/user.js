@@ -5,7 +5,7 @@ const express = require("express");
 
 
 
-const { register, login, getUsers,getUserById,deleteUserById } = require("../controllers/user");
+const { register, login, getUsers,getUserById,deleteUserById,loginGoogle } = require("../controllers/user");
 
 
 // declare router
@@ -17,6 +17,9 @@ userRouter.post("/register", register);
 
 // url => http://localhost:5000/user/login
 userRouter.post("/login", login);
+
+// login with google url => http://localhost:5000/user/loginGoogle
+userRouter.post("/loginGoogle", loginGoogle);
 
 
 

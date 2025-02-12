@@ -2,7 +2,10 @@ const pool = require("../models/db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const saltRounds = parseInt(process.env.SALT);
-
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(
+  "583658858550-mc1n9c3ha94v9n87ifut6kfdi4aanh2d.apps.googleusercontent.com"
+);
 const register = async (req, res) => {
   const { firstName, lastName, email, password, country, created_at } =
     req.body;
@@ -150,10 +153,82 @@ const deleteUserById = (req, res) => {
     res.status(500).json({ success: false, message: "Server Error", err: err });
   }
 };
+const generateUserToken = (user) => {
+  const payload = {
+    userId: user.id, // Add any relevant information here
+    email: user.email, // Example: Add email to payload
+  };
+
+  const secretKey = "yourSecretKey"; // Replace with your own secret key
+
+  // Generate JWT with payload and secret key
+  const token = jwt.sign(payload, secretKey, { expiresIn: "1h" }); // Token expires in 1 hour
+  return token;
+};
+// const login with google
+const loginGoogle = async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    // Verify the Google token
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience:
+        "583658858550-mc1n9c3ha94v9n87ifut6kfdi4aanh2d.apps.googleusercontent.com",
+    });
+    const payload = ticket.getPayload();
+    console.log("User Info:", payload);
+
+    // Check if the user exists in your database
+    const email = payload.email.toLowerCase();
+    // Query to find if the user already exists
+    const userQuery = `SELECT * FROM users WHERE email = $1`;
+    const existingUser = await pool.query(userQuery, [email]);
+
+    if (existingUser.rows.length === 0) {
+      // User does not exist, so we register them
+      const firstName = payload.given_name;
+      const lastName = payload.family_name;
+      const country = payload.locale; // You can use a different field if needed
+      const created_at = new Date(); // Set the current date for the user creation
+
+      // Now we register the user using your existing register logic
+      const role_id = "2"; // Set the role_id as needed
+      const encryptedPassword = ""; // Google login doesn't require a password, so this can be null
+
+      const query = `INSERT INTO users (firstName, lastName, email, password, country, role_id, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
+      const data = [
+        firstName,
+        lastName,
+        email,
+        encryptedPassword,
+        country,
+        role_id,
+        created_at,
+      ];
+
+      const result = await pool.query(query, data);
+
+      const newUser = result.rows[0];
+
+      // Generate a token for the new user
+      const userToken = generateUserToken(newUser); // Example: Generate JWT
+      return res.json({ token: userToken, userId: newUser.id });
+    }
+
+    // If user exists, return a token for the existing user
+    const userToken = generateUserToken(existingUser.rows[0]); // Example: Generate JWT
+    res.json({ token: userToken, userId: existingUser.rows[0].id });
+  } catch (error) {
+    console.error("Error verifying token:", error);
+    res.status(403).json({ error: "Invalid Google token" });
+  }
+};
 module.exports = {
   register,
   login,
   getUsers,
   getUserById,
   deleteUserById,
+  loginGoogle,
 };
