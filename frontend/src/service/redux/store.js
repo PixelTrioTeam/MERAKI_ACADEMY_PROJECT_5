@@ -4,6 +4,7 @@ import moviesReducer from "./reducers/movies/movieSlice";
 import seriesReducer from "./reducers/series/seriesSlice";
 import genreReducer from "./reducers/genre/genreSlice";
 import userReducer from "./reducers/users/usersSlice";
+import favReducer from "./reducers/fav/favSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     series: seriesReducer,
     genre: genreReducer,
     users: userReducer,
+    fav: favReducer,
   },
 });
 

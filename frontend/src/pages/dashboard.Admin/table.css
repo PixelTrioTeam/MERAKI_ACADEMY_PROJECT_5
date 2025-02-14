@@ -6,11 +6,11 @@
     padding-right: 50px;
 }
 .tableContainer h4{
-    color: white;
+    color: rgb(0, 0, 0);
 
 }
 .tableContainer h6{
-    color: white;
+    color: rgb(0, 0, 0);
 }
 .removeUser{
     width: 100px;

@@ -83,19 +83,24 @@ const getFavorite = (req, res) => {
       .json({ success: false, message: "Please login to see your list" });
   }
 
-  const query = `SELECT 
-    favorites.*, 
-    movies.title AS movie_name, 
-    movies.description AS movie_info, 
-    movies.poster AS movie_img,
-    series.title AS series_name,
-    series.description AS series_info,
-    series.poster AS series_img
+  const query = `SELECT
+  favorites.*,
+  movies.title AS movie_title,
+  movies.poster AS movie_poster,
+  movies.description AS movie_description,
+  movies.rate AS movie_rate,
+  movies.trailer AS movie_trailer,
+  series.title AS series_title,
+  series.poster AS series_poster,
+  series.description AS series_description,
+  series.trailer AS series_trailer
 FROM favorites
 LEFT JOIN movies ON favorites.movie_id = movies.id
 LEFT JOIN series ON favorites.series_id = series.id
 WHERE favorites.user_id = $1;
-`;
+;
+;
+  `;
   pool
     .query(query, [user_id])
     .then((result) => {
