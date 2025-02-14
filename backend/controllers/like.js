@@ -3,7 +3,7 @@ const pool = require("../models/db");
 const likeMovieOrSeries = (req, res) => {
   const { movie_id, series_id, like_status } = req.body;
   const user_id = req.token.userId;
-  // user id from token
+
   if (movie_id) {
     const updateQuery = `
         UPDATE likes

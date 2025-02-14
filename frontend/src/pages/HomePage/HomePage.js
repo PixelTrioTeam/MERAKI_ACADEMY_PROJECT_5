@@ -6,11 +6,54 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { setMovies } from "../../service/redux/reducers/movies/movieSlice";
 import { setSeries } from "../../service/redux/reducers/series/seriesSlice";
-import { Modal, Button } from "react-bootstrap";
-
+import { Modal, Button, Alert } from "react-bootstrap";
+import {
+  addFav,
+  setFav,
+  removeFav,
+} from "../../service/redux/reducers/fav/favSlice";
 
 const MovieModal = ({ show, onHide, movie }) => {
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.fav);
+
+  const [alertMessage, setAlertMessage] = useState(null);
+  const [alertVariant, setAlertVariant] = useState("");
   if (!movie) return null;
+  console.log("movie.id", movie.id);
+
+  const isFavorite = favorites.some(
+    (fav) => fav.movie_id === movie.id || fav.series_id === movie.series_id
+  );
+
+  const handleToggleFav = () => {
+    const favData = movie.id ? { movie_id: movie.id } : { series_id: movie.id };
+
+    if (isFavorite) {
+      axios
+        .delete(`http://localhost:5000/favorite/remove/${movie.id}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          data: favData,
+        })
+        .then(() => {
+          dispatch(removeFav(movie.id || movie.series_id));
+          setAlertMessage("Removed from favorites!");
+          setAlertVariant("danger");
+        })
+        .catch((err) => console.log("Error:", err));
+    } else {
+      axios
+        .post("http://localhost:5000/favorite/add", favData, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        })
+        .then((res) => {
+          dispatch(addFav(res.data.favorite));
+          setAlertMessage("Added to favorites!");
+          setAlertVariant("success");
+        })
+        .catch((err) => console.log("Error:", err));
+    }
+  };
 
   const getYouTubeEmbedUrl = (url) => {
     const videoId = url.split("v=")[1]?.split("&")[0];
@@ -29,6 +72,15 @@ const MovieModal = ({ show, onHide, movie }) => {
           style={{ width: "40%", borderRadius: "10px" }}
         />
         <div className="modal-content-container">
+          {alertMessage && (
+            <Alert
+              variant={alertVariant}
+              onClose={() => setAlertMessage(null)}
+              dismissible
+            >
+              {alertMessage}
+            </Alert>
+          )}
           {movie.trailer && movie.trailer.includes("youtube.com") ? (
             <iframe
               width="100%"
@@ -40,14 +92,19 @@ const MovieModal = ({ show, onHide, movie }) => {
               allowFullScreen
             ></iframe>
           ) : (
-            <video src={movie.trailer} controls autoPlay style={{ width: "100%" }}></video>
+            <video
+              src={movie.trailer}
+              controls
+              autoPlay
+              style={{ width: "100%" }}
+            ></video>
           )}
           <div>
-          <h4 className="modal-movie-title">{movie.title}</h4>
-          <h4 className="modal-movie-description">{movie.genre_name}</h4>
-          <h4 className="modal-movie-description">{movie.rate}</h4>
-          <h4 className="modal-movie-description">{movie.writer_name}</h4>
-          <p className="modal-movie-description">{movie.description}</p>
+            <h4 className="modal-movie-title">{movie.title}</h4>
+            <h4 className="modal-movie-description">{movie.genre_name}</h4>
+            <h4 className="modal-movie-description">{movie.rate}</h4>
+            <h4 className="modal-movie-description">{movie.writer_name}</h4>
+            <p className="modal-movie-description">{movie.description}</p>
           </div>
           <Modal.Footer>
             {movie.trailer && (
@@ -61,6 +118,9 @@ const MovieModal = ({ show, onHide, movie }) => {
                 Watch Trailer
               </Button>
             )}
+            <Button variant="primary" onClick={handleToggleFav}>
+              {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+            </Button>
           </Modal.Footer>
         </div>
       </Modal.Body>
@@ -71,12 +131,12 @@ const MovieModal = ({ show, onHide, movie }) => {
   );
 };
 
-
 const HomePage = () => {
   const [index, setIndex] = useState(0);
   const dispatch = useDispatch();
   const movies = useSelector((state) => state.movies.movies);
   const series = useSelector((state) => state.series.series);
+  const favorites = useSelector((state) => state.fav);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [modalShow, setModalShow] = useState(false);
 
@@ -87,7 +147,7 @@ const HomePage = () => {
         dispatch(setMovies(res.data.result));
       })
       .catch((err) => console.error(err));
-  }, [dispatch]);
+  }, [dispatch, favorites]);
 
   useEffect(() => {
     axios
@@ -96,7 +156,7 @@ const HomePage = () => {
         dispatch(setSeries(res.data.result));
       })
       .catch((err) => console.error(err));
-  }, [dispatch]);
+  }, [dispatch, favorites]);
 
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
@@ -158,11 +218,13 @@ const HomePage = () => {
               {movies.length > 0 ? (
                 movies.map((movie) =>
                   movie.section === "Nolan" ? (
-                    <div className="flip-card" key={movie.id}
-                    onClick={()=>{
-                      setSelectedMovie(movie);
-                      setModalShow(true)
-                    }} 
+                    <div
+                      className="flip-card"
+                      key={movie.id}
+                      onClick={() => {
+                        setSelectedMovie(movie);
+                        setModalShow(true);
+                      }}
                     >
                       <div className="flip-card-inner">
                         <div className="flip-card-front">
@@ -183,6 +245,7 @@ const HomePage = () => {
                           <p className="movie-director">
                             {movie.director_name}
                           </p>
+
                           <p className="movie-rating">⭐ {movie.rate}/10</p>
                         </div>
                       </div>
@@ -201,11 +264,14 @@ const HomePage = () => {
               {series.length > 0 ? (
                 series.map((serie) =>
                   serie.section === "Pouplar" ? (
-                    <div className="flip-card" key={serie.id}
-                    onClick={()=>{
-                      setSelectedMovie(serie);
-                      setModalShow(true)
-                    }}>
+                    <div
+                      className="flip-card"
+                      key={serie.id}
+                      onClick={() => {
+                        setSelectedMovie(serie);
+                        setModalShow(true);
+                      }}
+                    >
                       <div className="flip-card-inner">
                         <div className="flip-card-front">
                           <img
@@ -236,7 +302,6 @@ const HomePage = () => {
               )}
             </div>
           </div>
-          
         </div>
         <div>
           <div className="movies-container">
@@ -245,11 +310,13 @@ const HomePage = () => {
               {movies.length > 0 ? (
                 movies.map((movie) =>
                   movie.section === "Jordan" ? (
-                    <div className="flip-card" key={movie.id}
-                    onClick={()=>{
-                      setSelectedMovie(movie);
-                      setModalShow(true)
-                    }} 
+                    <div
+                      className="flip-card"
+                      key={movie.id}
+                      onClick={() => {
+                        setSelectedMovie(movie);
+                        setModalShow(true);
+                      }}
                     >
                       <div className="flip-card-inner">
                         <div className="flip-card-front">
@@ -288,11 +355,13 @@ const HomePage = () => {
               {movies.length > 0 ? (
                 movies.map((movie) =>
                   movie.section === "Soon" ? (
-                    <div className="flip-card" key={movie.id}
-                    onClick={()=>{
-                      setSelectedMovie(movie);
-                      setModalShow(true)
-                    }} 
+                    <div
+                      className="flip-card"
+                      key={movie.id}
+                      onClick={() => {
+                        setSelectedMovie(movie);
+                        setModalShow(true);
+                      }}
                     >
                       <div className="flip-card-inner">
                         <div className="flip-card-front">
@@ -323,10 +392,13 @@ const HomePage = () => {
               )}
             </div>
           </div>
-          
         </div>
-        
-        <MovieModal show={modalShow} onHide={() => setModalShow(false)} movie={selectedMovie} />
+
+        <MovieModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          movie={selectedMovie}
+        />
       </div>
     </>
   );

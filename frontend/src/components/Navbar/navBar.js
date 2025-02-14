@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setGenre } from "../../service/redux/reducers/genre/genreSlice";
-const pages = ["Home","Movies", "Series", "Genre"];
+const pages = ["Home", "Movies", "Series", "Genre", "Favorites"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -145,7 +145,7 @@ function Navbar() {
                   },
                 }}
               >
-              {genres.map((genre) => (
+                {genres.map((genre) => (
                   <MenuItem
                     key={genre.id}
                     onClick={() => {
@@ -183,11 +183,12 @@ function Navbar() {
               ) : (
                 <Button
                   key={page}
-                  onClick={() =>
-                    {if(page === 'Home'){
-                      nav('/Main')
-                    }else{
-                    nav(`/${page.toLowerCase()}`)}
+                  onClick={() => {
+                    if (page === "Home") {
+                      nav("/Main");
+                    } else {
+                      nav(`/${page.toLowerCase()}`);
+                    }
                   }}
                   sx={{
                     my: 2,
@@ -266,19 +267,15 @@ function Navbar() {
             }}
           >
             <List>
-              {["Profile", "About Us"].map((text) => (
+              {["About Us"].map((text) => (
                 <ListItem
                   button
                   key={text}
-
-                 
-
                   onClick={() => {
                     if (text === "Admin Dashboard") {
                       nav(`/admin-dashboard`);
                     }
                   }}
-
                   sx={{
                     "&:hover": { backgroundColor: "red" },
                     borderRadius: 1,
@@ -288,7 +285,7 @@ function Navbar() {
                   <ListItemText primary={text} />
                 </ListItem>
               ))}
-               { (
+              {
                 <ListItem
                   button
                   key="Admin Dashboard"
@@ -301,7 +298,7 @@ function Navbar() {
                 >
                   <ListItemText primary="Admin Dashboard" />
                 </ListItem>
-              )}
+              }
             </List>
           </Drawer>
         </Toolbar>

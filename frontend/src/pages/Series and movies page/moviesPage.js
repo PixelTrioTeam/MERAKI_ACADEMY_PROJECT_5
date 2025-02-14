@@ -3,12 +3,54 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 import { setMovies } from "../../service/redux/reducers/movies/movieSlice";
-import { Modal, Button } from "react-bootstrap";
+import {
+  setFav,
+  removeFav,
+  addFav,
+} from "../../service/redux/reducers/fav/favSlice";
+import { Modal, Button, Alert } from "react-bootstrap";
 
 import "./movies.css";
 
 const MovieModal = ({ show, onHide, movie }) => {
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.fav);
+  const [alertMessage, setAlertMessage] = useState(null);
+  const [alertVariant, setAlertVariant] = useState("");
   if (!movie) return null;
+
+  const isFavorite = favorites.some(
+    (fav) => fav.movie_id === movie.id || fav.series_id === movie.series_id
+  );
+
+  const handleToggleFav = () => {
+    const favData = movie.id ? { movie_id: movie.id } : { series_id: movie.id };
+
+    if (isFavorite) {
+      axios
+        .delete(`http://localhost:5000/favorite/remove/${movie.id}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          data: favData,
+        })
+        .then(() => {
+          dispatch(removeFav(movie.id || movie.series_id));
+          setAlertMessage("Removed from favorites!");
+          setAlertVariant("danger");
+        })
+        .catch((err) => console.log("Error:", err));
+    } else {
+      axios
+        .post("http://localhost:5000/favorite/add", favData, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        })
+        .then((res) => {
+          dispatch(addFav(res.data.favorite));
+          setAlertMessage("Added to favorites!");
+          setAlertVariant("success");
+        })
+        .catch((err) => console.log("Error:", err));
+    }
+  };
 
   const getYouTubeEmbedUrl = (url) => {
     const videoId = url.split("v=")[1]?.split("&")[0];
@@ -27,6 +69,16 @@ const MovieModal = ({ show, onHide, movie }) => {
           style={{ width: "40%", borderRadius: "10px" }}
         />
         <div className="modal-content-container">
+          {alertMessage && (
+            <Alert
+              variant={alertVariant}
+              onClose={() => setAlertMessage(null)}
+              dismissible
+            >
+              {alertMessage}
+            </Alert>
+          )}
+
           {movie.trailer && movie.trailer.includes("youtube.com") ? (
             <iframe
               width="100%"
@@ -38,7 +90,12 @@ const MovieModal = ({ show, onHide, movie }) => {
               allowFullScreen
             ></iframe>
           ) : (
-            <video src={movie.trailer} controls autoPlay style={{ width: "100%" }}></video>
+            <video
+              src={movie.trailer}
+              controls
+              autoPlay
+              style={{ width: "100%" }}
+            ></video>
           )}
           <h4 className="modal-movie-title">{movie.title}</h4>
           <h4 className="modal-movie-description">{movie.genre_name}</h4>
@@ -57,6 +114,9 @@ const MovieModal = ({ show, onHide, movie }) => {
                 Watch Trailer
               </Button>
             )}
+            <Button variant="primary" onClick={handleToggleFav}>
+              {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+            </Button>
           </Modal.Footer>
         </div>
       </Modal.Body>
@@ -124,7 +184,11 @@ const MoviesPage = () => {
           </div>
         </section>
       ))}
-      <MovieModal show={modalShow} onHide={() => setModalShow(false)} movie={selectedMovie} />
+      <MovieModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        movie={selectedMovie}
+      />
     </div>
   );
 };
