@@ -18,11 +18,145 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import { Paper } from "@mui/material";
 import "./navBar.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setGenre } from "../../service/redux/reducers/genre/genreSlice";
+import { useState } from "react";
+import { Modal, Alert } from "react-bootstrap";
+import {
+  setFav,
+  removeFav,
+  addFav,
+} from "../../service/redux/reducers/fav/favSlice";
+
+const MovieModal = ({ show, onHide, movie }) => {
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.fav);
+  const [alertMessage, setAlertMessage] = useState(null);
+  const [alertVariant, setAlertVariant] = useState("");
+  if (!movie) return null;
+  const isFavorite = favorites.some(
+    (fav) => fav.movie_id === movie.id || fav.series_id === movie.series_id
+  );
+
+  const handleToggleFav = () => {
+    const favData = movie.id ? { movie_id: movie.id } : { series_id: movie.id };
+
+    if (isFavorite) {
+      axios
+        .delete(`http://localhost:5000/favorite/remove/${movie.id}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          data: favData,
+        })
+        .then(() => {
+          dispatch(removeFav(movie.id || movie.series_id));
+          setAlertMessage("Removed from favorites!");
+          setAlertVariant("danger");
+        })
+        .catch((err) => console.log("Error:", err));
+    } else {
+      axios
+        .post("http://localhost:5000/favorite/add", favData, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        })
+        .then((res) => {
+          dispatch(addFav(res.data.favorite));
+          setAlertMessage("Added to favorites!");
+          setAlertVariant("success");
+        })
+        .catch((err) => console.log("Error:", err));
+    }
+  };
+
+  const getYouTubeEmbedUrl = (url) => {
+    const videoId = url.split("v=")[1]?.split("&")[0];
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : "";
+  };
+
+  return (
+    <Modal show={show} onHide={onHide} size="lg" centered>
+      <Modal.Header closeButton>
+        <Modal.Title className="modal-title">{movie.title}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="d-flex">
+        <img
+          src={movie.poster}
+          alt={movie.title}
+          style={{ width: "40%", borderRadius: "10px" }}
+        />
+        <div className="modal-content-container">
+          {alertMessage && (
+            <Alert
+              variant={alertVariant}
+              onClose={() => setAlertMessage(null)}
+              dismissible
+            >
+              {alertMessage}
+            </Alert>
+          )}
+          {movie.trailer && movie.trailer.includes("youtube.com") ? (
+            <iframe
+              width="100%"
+              height="315"
+              src={getYouTubeEmbedUrl(movie.trailer)}
+              title={movie.title}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          ) : (
+            <video
+              src={movie.trailer}
+              controls
+              autoPlay
+              style={{ width: "100%" }}
+            ></video>
+          )}
+          <h4 className="modal-movie-title">{movie.title}</h4>
+          <h4 className="modal-movie-description">{movie.genre_name}</h4>
+          <h4 className="modal-movie-description">{movie.rate}</h4>
+          <h4 className="modal-movie-description">{movie.writer_name}</h4>
+          <p className="modal-movie-description">{movie.description}</p>
+          <Modal.Footer>
+            {movie.trailer && (
+              <Button
+                style={{
+                  backgroundColor: "#ff4444",
+                  fontWeight: "bold",
+                  color: "white",
+                }}
+                variant="danger"
+                as="a"
+                href={movie.trailer}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Watch Trailer
+              </Button>
+            )}
+            <Button
+              style={{
+                backgroundColor: "#ff4444",
+                fontWeight: "bold",
+                color: "white",
+              }}
+              variant="primary"
+              onClick={handleToggleFav}
+            >
+              {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+            </Button>
+          </Modal.Footer>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+      </Modal.Footer>
+    </Modal>
+  );
+};
+
 const pages = ["Home", "Movies", "Series", "Genre", "Favorites"];
 
 function Navbar() {
@@ -32,7 +166,23 @@ function Navbar() {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const genres = useSelector((state) => state.genre.genre);
-
+  const movies = useSelector((state) => state.movies.movies);
+  const series = useSelector((state) => state.series.series);
+  const IsLoggedIn = useSelector((state) => state.auth);
+  const [searchResultMovie, setsearchResultMovie] = useState([]);
+  const [searchResultSeries, setsearchResultSeries] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [modalShow, setModalShow] = useState(false);
+  const state = useSelector((reducer) => {
+    return {
+      authReducer: reducer.authReducer,
+    };
+  });
+  // access the token and userId and isLoggedIn
+  // const token = state.authReducer.token;
+  // const userId = state.authReducer.userId;
+  const isLoggedIn = state.authReducer.isLoggedIn;
+  const [setSearch, setsetSearch] = useState("");
   useEffect(() => {
     axios
       .get("http://localhost:5000/movie/genre")
@@ -40,9 +190,14 @@ function Navbar() {
         console.log("Genres API Response:", res.data.result);
 
         dispatch(setGenre(res.data.result));
+        console.log("osama", movies);
       })
       .catch((error) => console.error("Error fetching genres", error));
   }, [dispatch]);
+
+  // const handleSearch =(e) =>{
+
+  // }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -203,24 +358,112 @@ function Navbar() {
             )}
           </Box>
 
-          <TextField
-            variant="outlined"
-            placeholder="Search..."
-            size="small"
-            sx={{
-              backgroundColor: "white",
-              borderRadius: 2,
-              mr: 1,
-              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.3)",
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
+          <div style={{ position: "relative", width: "250px" }}>
+            <TextField
+              variant="outlined"
+              placeholder="Search..."
+              size="small"
+              fullWidth
+              sx={{
+                backgroundColor: "white",
+                borderRadius: 2,
+                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.3)",
+              }}
+              onChange={(e) => {
+                const searchValue = e.target.value.toLowerCase();
+                const filteredMovies = movies.filter((movie) =>
+                  movie.title.toLowerCase().includes(searchValue)
+                );
+                const filteredSeries = series.filter((serie) =>
+                  serie.title.toLowerCase().includes(searchValue)
+                );
+                console.log(
+                  "aaaaaaaaaa",
+                  filteredMovies,
+                  "search value ",
+                  movies
+                );
+
+                setsearchResultMovie(filteredMovies);
+                setsearchResultSeries(filteredSeries);
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            {(searchResultMovie.length > 0 ||
+              searchResultSeries.length > 0) && (
+              <Paper
+                sx={{
+                  position: "absolute",
+                  top: "100%",
+                  left: 0,
+                  width: "100%",
+                  mt: 1,
+                  borderRadius: "10px",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+                  zIndex: 10,
+                  backgroundColor: "white",
+                  maxHeight: "400px",
+                  overflowY: "auto",
+                }}
+              >
+                <List>
+                  {searchResultMovie.map((movie) => (
+                    <ListItem
+                      key={movie.id}
+                      button
+                      onClick={() => {
+                        setSelectedMovie(movie);
+                        setModalShow(true);
+                      }}
+                    >
+                      <ListItemText primary={movie.title} />
+                      <img
+                        src={movie.poster}
+                        alt={movie.title}
+                        style={{
+                          width: "50px",
+                          height: "75px",
+                          borderRadius: "8px",
+                          transition: "transform 0.3s ease-in-out",
+                          cursor: "pointer",
+                        }}
+                      />
+                    </ListItem>
+                  ))}
+                  {searchResultSeries.map((serie) => (
+                    <ListItem
+                      key={serie.id}
+                      button
+                      onClick={() => {
+                        setSelectedMovie(serie);
+                        setModalShow(true);
+                      }}
+                    >
+                      <ListItemText primary={serie.title} />
+                      <img
+                        src={serie.poster}
+                        alt={serie.title}
+                        style={{
+                          width: "50px",
+                          height: "75px",
+                          borderRadius: "8px",
+                          transition: "transform 0.3s ease-in-out",
+                          cursor: "pointer",
+                        }}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+              </Paper>
+            )}
+          </div>
 
           <Button
             onClick={() => nav("/login")}
@@ -303,6 +546,15 @@ function Navbar() {
           </Drawer>
         </Toolbar>
       </Container>
+      {selectedMovie && (
+        <MovieModal
+          show={modalShow}
+          onHide={() => {
+            setModalShow(false);
+          }}
+          movie={selectedMovie}
+        />
+      )}
     </AppBar>
   );
 }

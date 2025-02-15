@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
+import './table.css'
 
 export default function MoviesSeriesTable() {
   const [movies, setMovies] = useState([]);
