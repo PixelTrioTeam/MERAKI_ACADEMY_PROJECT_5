@@ -168,7 +168,8 @@ function Navbar() {
   const genres = useSelector((state) => state.genre.genre);
   const movies = useSelector((state) => state.movies.movies);
   const series = useSelector((state) => state.series.series);
-  const IsLoggedIn = useSelector((state) => state.auth);
+
+  
   const [searchResultMovie, setsearchResultMovie] = useState([]);
   const [searchResultSeries, setsearchResultSeries] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
@@ -465,20 +466,7 @@ function Navbar() {
             )}
           </div>
 
-          <Button
-            onClick={() => nav("/login")}
-            variant="contained"
-            sx={{
-              backgroundColor: "red",
-              color: "white",
-              borderRadius: 2,
-              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.3)",
-              mr: 1,
-              width: "100px",
-            }}
-          >
-            Login
-          </Button>
+      
 
           <IconButton
             edge="end"
@@ -510,13 +498,16 @@ function Navbar() {
             }}
           >
             <List>
-              {["About Us"].map((text) => (
+              {['Logout',"About Us" ].map((text) => (
                 <ListItem
                   button
                   key={text}
                   onClick={() => {
                     if (text === "Admin Dashboard") {
                       nav(`/admin-dashboard`);
+                    }else if(text === 'Logout'){
+                      localStorage.clear()
+                      nav('/login')
                     }
                   }}
                   sx={{
