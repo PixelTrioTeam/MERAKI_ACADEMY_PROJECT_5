@@ -12,6 +12,7 @@ import SecondaryNav from "../components/Navbar/navBar";
 import BasicTable from "../pages/dashboard.Admin/BasicTable";
 import DrawerAppBar from "../pages/dashboard.Admin/adminNav";
 import Fav from "../pages/fav/Fav";
+import MovieFullScreen from '../pages/MovieFullScreen/MovieFullScreen'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path : '/FullScreen',
+    element : <MovieFullScreen/>
+  }
 ]);
 
 export default router;

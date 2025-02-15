@@ -168,6 +168,7 @@ function Navbar() {
   const genres = useSelector((state) => state.genre.genre);
   const movies = useSelector((state) => state.movies.movies);
   const series = useSelector((state) => state.series.series);
+  const userId = localStorage.getItem('userId')
 
   
   const [searchResultMovie, setsearchResultMovie] = useState([]);
@@ -422,6 +423,8 @@ function Navbar() {
                       onClick={() => {
                         setSelectedMovie(movie);
                         setModalShow(true);
+                        setsearchResultMovie('');
+                        setsearchResultSeries('')
                       }}
                     >
                       <ListItemText primary={movie.title} />
@@ -445,6 +448,8 @@ function Navbar() {
                       onClick={() => {
                         setSelectedMovie(serie);
                         setModalShow(true);
+                        setsearchResultMovie('');
+                        setsearchResultSeries('')
                       }}
                     >
                       <ListItemText primary={serie.title} />
@@ -503,9 +508,8 @@ function Navbar() {
                   button
                   key={text}
                   onClick={() => {
-                    if (text === "Admin Dashboard") {
-                      nav(`/admin-dashboard`);
-                    }else if(text === 'Logout'){
+                    
+                   if (text === 'Logout'){
                       localStorage.clear()
                       nav('/login')
                     }
@@ -519,8 +523,8 @@ function Navbar() {
                   <ListItemText primary={text} />
                 </ListItem>
               ))}
-              {
-                <ListItem
+              { userId == 1 || userId == 2 || userId == 3 ? (
+                <ListItem 
                   button
                   key="Admin Dashboard"
                   onClick={() => nav("/admin-dashboard")}
@@ -532,6 +536,7 @@ function Navbar() {
                 >
                   <ListItemText primary="Admin Dashboard" />
                 </ListItem>
+              ):null
               }
             </List>
           </Drawer>
