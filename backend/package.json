@@ -17,6 +17,8 @@
 		"express": "^4.21.2",
 		"google-auth-library": "^9.15.1",
 		"jsonwebtoken": "^9.0.2",
-		"pg": "^8.13.1"
+		"pg": "^8.13.1",
+		"socket.io": "^4.8.1",
+		"soket.io": "^0.0.1-security"
 	}
 }
