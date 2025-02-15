@@ -42,6 +42,9 @@ const Login = () => {
         setMessage("");
         localStorage.setItem("token", result.data.token);
         localStorage.setItem("userId", result.data.userId);
+        localStorage.setItem('roleId' , result.data.roleId)
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',result.data);
+        
         dispatch(setLogin(result.data.token));
         dispatch(setUserId(result.data.userId));
         if (isLoggedIn) {

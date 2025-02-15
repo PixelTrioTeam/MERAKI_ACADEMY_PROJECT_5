@@ -8,15 +8,17 @@ import {
   removeFav,
   addFav,
 } from "../../service/redux/reducers/fav/favSlice";
-import { Modal, Button, Alert } from "react-bootstrap";
-
+import { Modal, Button, Alert, Nav } from "react-bootstrap";
+import MovieFullScreen from '../MovieFullScreen/MovieFullScreen'
 import "./movies.css";
+import { useNavigate } from "react-router-dom";
 
 const MovieModal = ({ show, onHide, movie }) => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.fav);
   const [alertMessage, setAlertMessage] = useState(null);
   const [alertVariant, setAlertVariant] = useState("");
+  const nav = useNavigate()
   if (!movie) return null;
 
   const isFavorite = favorites.some(
@@ -105,13 +107,19 @@ const MovieModal = ({ show, onHide, movie }) => {
           <Modal.Footer>
             {movie.trailer && (
               <Button
+
                 variant="danger"
                 as="a"
-                href={movie.trailer}
+                // href={movie.trailer}
                 target="_blank"
                 rel="noopener noreferrer"
+
+                onClick={()=>{
+                  nav('/FullScreen')
+                  
+                }}
               >
-                Watch Trailer
+                Watch now
               </Button>
             )}
             <Button variant="primary" onClick={handleToggleFav}>
@@ -121,7 +129,6 @@ const MovieModal = ({ show, onHide, movie }) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
   );
