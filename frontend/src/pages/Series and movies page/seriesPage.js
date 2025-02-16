@@ -16,6 +16,7 @@ const MovieModal = ({ show, onHide, movie, series }) => {
   const favorites = useSelector((state) => state.fav);
   const [alertMessage, setAlertMessage] = useState(null);
   const [alertVariant, setAlertVariant] = useState("");
+  const nav = useNavigate();
 
   if (!movie) return null;
 
@@ -113,12 +114,9 @@ const MovieModal = ({ show, onHide, movie, series }) => {
             {movie.trailer && (
               <Button
                 variant="danger"
-                as="a"
-                href={movie.trailer}
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() => nav("/FullScreen", { state: { movie } })}
               >
-                Watch Trailer
+                Watch now
               </Button>
             )}
             <Button variant="primary" onClick={handleToggleFav}>
