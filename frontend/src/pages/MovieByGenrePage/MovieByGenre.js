@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setMoviesByGenreId } from "../../service/redux/reducers/movies/movieSlice";
 import { setSeriesByGenreId } from "../../service/redux/reducers/series/seriesSlice";
@@ -16,6 +16,7 @@ const MovieModal = ({ show, onHide, movie }) => {
   const favorites = useSelector((state) => state.fav);
   const [alertMessage, setAlertMessage] = useState(null);
   const [alertVariant, setAlertVariant] = useState("");
+  const nav = useNavigate();
   if (!movie) return null;
   const isFavorite = favorites.some(
     (fav) => fav.movie_id === movie.id || fav.series_id === movie.series_id
@@ -103,12 +104,9 @@ const MovieModal = ({ show, onHide, movie }) => {
             {movie.trailer && (
               <Button
                 variant="danger"
-                as="a"
-                href={movie.trailer}
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() => nav("/FullScreen", { state: { movie } })}
               >
-                Watch Trailer
+                Watch now
               </Button>
             )}
             <Button variant="primary" onClick={handleToggleFav}>

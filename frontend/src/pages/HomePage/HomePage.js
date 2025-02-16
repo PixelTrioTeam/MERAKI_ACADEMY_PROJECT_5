@@ -19,6 +19,7 @@ const MovieModal = ({ show, onHide, movie }) => {
 
   const [alertMessage, setAlertMessage] = useState(null);
   const [alertVariant, setAlertVariant] = useState("");
+  const nav = useNavigate();
   if (!movie) return null;
   console.log("movie.id", movie.id);
 
@@ -110,12 +111,9 @@ const MovieModal = ({ show, onHide, movie }) => {
             {movie.trailer && (
               <Button
                 variant="danger"
-                as="a"
-                href={movie.trailer}
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() => nav("/FullScreen", { state: { movie } })}
               >
-                Watch Trailer
+                Watch now
               </Button>
             )}
             <Button variant="primary" onClick={handleToggleFav}>
@@ -139,6 +137,7 @@ const HomePage = () => {
   const favorites = useSelector((state) => state.fav);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [modalShow, setModalShow] = useState(false);
+  const nav = useNavigate();
 
   useEffect(() => {
     axios
@@ -193,9 +192,14 @@ const HomePage = () => {
                         <p className="movie-description">{movie.description}</p>
                         <p className="movie-actors">{movie.actor_names}</p>
                         <p className="movie-director">{movie.director_name}</p>
-                        <a href="/watch-now" className="watch-now-link">
-                          Watch Now
-                        </a>
+                        <Button
+                          variant="danger"
+                          onClick={() =>
+                            nav("/FullScreen", { state: { movie } })
+                          }
+                        >
+                          Watch now
+                        </Button>
                       </div>
                     </div>
                   </div>
