@@ -151,13 +151,12 @@ const MovieModal = ({ show, onHide, movie }) => {
           </Modal.Footer>
         </div>
       </Modal.Body>
-      <Modal.Footer>
-      </Modal.Footer>
+      <Modal.Footer></Modal.Footer>
     </Modal>
   );
 };
 
-const pages = ["Home", "Movies", "Series", "Genre", "Favorites"];
+const pages = ["Home", "Movies", "Series", "Genre", "Favorites",];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -170,7 +169,6 @@ function Navbar() {
   const series = useSelector((state) => state.series.series);
   const userId = localStorage.getItem('userId')
 
-  
   const [searchResultMovie, setsearchResultMovie] = useState([]);
   const [searchResultSeries, setsearchResultSeries] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
@@ -471,8 +469,6 @@ function Navbar() {
             )}
           </div>
 
-      
-
           <IconButton
             edge="end"
             color="inherit"
@@ -503,16 +499,25 @@ function Navbar() {
             }}
           >
             <List>
-              {['Logout',"About Us" ].map((text) => (
+              {["Logout", "About Us"].map((text) => (
                 <ListItem
                   button
                   key={text}
                   onClick={() => {
+
+                    if (text === "Admin Dashboard") {
+                      nav(`/admin-dashboard`);
+                    } else if (text === "Logout") {
+                      localStorage.clear();
+                      nav("/login");
+
                     
                    if (text === 'Logout'){
                       localStorage.clear()
                       nav('/login')
+
                     }
+                    
                   }}
                   sx={{
                     "&:hover": { backgroundColor: "red" },

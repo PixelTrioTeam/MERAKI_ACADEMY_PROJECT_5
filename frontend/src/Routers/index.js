@@ -2,7 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../pages/HomePage/HomePage";
 import Main from "../layouts/Main/index";
 import MoviesPage from "../pages/Series and movies page/moviesPage";
-import WelcomePage from "../pages/WelcomePage/WelcomePage";
+
+import WelcomePage from "../pages/welcomePage/WelcomePage";
+
 import SeriesPage from "../pages/Series and movies page/seriesPage";
 import Login from "../pages/Login/login";
 import Register from "../pages/register/register";
@@ -11,7 +13,11 @@ import DashAdmin from "../pages/dashboard.Admin/dashAdmin";
 import SecondaryNav from "../components/Navbar/navBar";
 import BasicTable from "../pages/dashboard.Admin/BasicTable";
 import Fav from "../pages/fav/Fav";
+
+import Payment from "../pages/payment/Payment";
+
 import MovieFullScreen from "../pages/MovieFullScreen/MovieFullScreen";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -96,8 +102,13 @@ const router = createBrowserRouter([
     ],
   },
   {
+
+    path: "/payment",
+    element: <Payment />,
+
     path: "/FullScreen",
     element: <MovieFullScreen />,
+
   },
 ]);
 
