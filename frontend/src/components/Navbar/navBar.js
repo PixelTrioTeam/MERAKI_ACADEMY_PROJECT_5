@@ -510,7 +510,8 @@ function Navbar() {
                     } else if (text === "Logout") {
                       localStorage.clear();
                       nav("/login");
-                    }
+                
+
                   }}
                   sx={{
                     "&:hover": { backgroundColor: "red" },

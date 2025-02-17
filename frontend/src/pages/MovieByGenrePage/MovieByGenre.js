@@ -57,18 +57,19 @@ const MovieModal = ({ show, onHide, movie }) => {
   };
 
   return (
-    <Modal show={show} onHide={onHide} size="lg" centered>
+    <Modal show={show} onHide={onHide} size="xl" centered>
     <Modal.Header closeButton>
       <Modal.Title
         className="modal-title"
         style={{
+          
           fontSize: '28px',
           fontWeight: '600',
           fontFamily: '"Poppins", sans-serif',
           color: '#333', // Dark color for title
         }}
       >
-        <div style={{color : 'red'}}>{movie.title}</div>
+        <div style={{color : '#dcdcdc'}}>{movie.title}</div>
       </Modal.Title>
     </Modal.Header>
   
@@ -115,16 +116,16 @@ const MovieModal = ({ show, onHide, movie }) => {
   
         
         <h5 className="modal-movie-description" style={{ marginBottom: '10px', fontFamily: '"Poppins", sans-serif' }}>
-          <span style={{ color: 'red' }}>Genre: </span>{movie.genre_name}
+          <span style={{ color: 'white', fontWeight : 'bold' }}>Genre: </span>{movie.genre_name}
         </h5>
         <h5 className="modal-movie-description" style={{ marginBottom: '10px', fontFamily: '"Poppins", sans-serif' }}>
-          <span style={{ color: 'red' }}>Rating: </span>{movie.rate}
+          <span style={{ color: 'white', fontWeight : 'bold' }}>Rating: </span>{movie.rate}
         </h5>
         <h5 className="modal-movie-description" style={{ marginBottom: '10px', fontFamily: '"Poppins", sans-serif' }}>
-          <span style={{ color: 'red' }}>Writer: </span>{movie.writer_name}
+          <span style={{ color: 'white', fontWeight : 'bold' }}>Writer: </span>{movie.writer_name}
         </h5>
         <h5 className="modal-movie-description" style={{ marginBottom: '10px', fontFamily: '"Poppins", sans-serif' }}>
-          <span style={{ color: 'red' }}>description: </span>{movie.description}
+          <span style={{ color: 'white', fontWeight : 'bold' }}>description: </span>{movie.description}
         </h5>
         
   

@@ -111,6 +111,13 @@ const MovieModal = ({ show, onHide, fav }) => {
   );
 };
 
+const SectionHeader = ({ title }) => (
+  <div>
+    <h2 style={{color : 'red'}} className="section-title">{title}</h2>
+    <hr style={{ background : 'linear-gradient(135deg, #1a1a1a, #660000)'}} className="section-divider" />
+  </div>
+);
+
 const Fav = () => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.fav);
@@ -133,8 +140,8 @@ const Fav = () => {
 
   return (
     <div>
-      <h2>Your Favorites</h2>
-      <div className="movies-container">
+          <SectionHeader title="Your Favorite" />
+          <div className="movies-container">
         <div className="movies-grid">
           {favorites.length > 0 ? (
             favorites.map((fav) => (
