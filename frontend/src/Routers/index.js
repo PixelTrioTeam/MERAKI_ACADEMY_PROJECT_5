@@ -10,7 +10,6 @@ import MovieByGenre from "../pages/MovieByGenrePage/MovieByGenre";
 import DashAdmin from "../pages/dashboard.Admin/dashAdmin";
 import SecondaryNav from "../components/Navbar/navBar";
 import BasicTable from "../pages/dashboard.Admin/BasicTable";
-import DrawerAppBar from "../pages/dashboard.Admin/adminNav";
 import Fav from "../pages/fav/Fav";
 import MovieFullScreen from "../pages/MovieFullScreen/MovieFullScreen";
 const router = createBrowserRouter([

@@ -9,7 +9,9 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
-import './table.css'
+import { Container, Typography, Box } from "@mui/material";
+import './table.css';
+// import './styles.css';
 
 export default function MoviesSeriesTable() {
   const [movies, setMovies] = useState([]);
@@ -69,122 +71,58 @@ export default function MoviesSeriesTable() {
   };
 
   return (
-    <div>
-      <div style={{ marginBottom: "20px", textAlign: "center" }}>
-        <Button variant="contained" color="primary" onClick={fetchUsers}>Get Users</Button>
-        <Button variant="contained" color="primary" onClick={fetchMovies} style={{ marginLeft: "10px" }}>Get Movies</Button>
-        <Button variant="contained" color="primary" onClick={fetchSeries} style={{ marginLeft: "10px" }}>Get Series</Button>
-      </div>
+    <Container className="app-container">
+      <Box textAlign="center" my={3}>
+        <Button style={{ backgroundColor: '#660000', margin: '10px' }} className="custom-button" onClick={fetchUsers}>Get Users</Button>
+        <Button style={{ backgroundColor: '#660000', margin: '10px' }} className="custom-button" onClick={fetchMovies}>Get Movies</Button>
+        <Button style={{ backgroundColor: '#660000', margin: '10px' }} className="custom-button" onClick={fetchSeries}>Get Series</Button>
+      </Box>
       
-      {view === "users" && (
-        <>
-          <h3 style={{ textAlign: "center" }}>Users</h3>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="Users Table">
-              <TableHead>
-                <TableRow>
-                  <TableCell><h4>Name</h4></TableCell>
-                  <TableCell align="right"><h4>Email</h4></TableCell>
-                  <TableCell align="right"><h4>Actions</h4></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {users.map((user) => (
-                  <TableRow key={user.id}>
-                    <TableCell>{user.firstname}</TableCell>
-                    <TableCell align="right">{user.email}</TableCell>
-                    <TableCell align="right">
-                      <Button variant="outlined" color="error" onClick={() => deleteUser(user.id)}>
-                        <DeleteIcon />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </>
+      {view && (
+        <Typography variant="h4" textAlign="center" gutterBottom>
+          {view.charAt(0).toUpperCase() + view.slice(1)}
+        </Typography>
       )}
       
-      {view === "movies" && (
-        <>
-          <h3 style={{ textAlign: "center" }}>Movies</h3>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="Movies Table">
-              <TableHead>
-                <TableRow>
-                  <TableCell><h4>Title</h4></TableCell>
-                  <TableCell align="right"><h4>poster</h4></TableCell>
-                  <TableCell align="right"><h4>Actions</h4></TableCell>
+      {(view === "users" || view === "movies" || view === "series") && (
+        <TableContainer  component={Paper} elevation={3} sx={{ borderRadius: 2 }}>
+          <Table sx={{ minWidth: 650 }} aria-label={`${view} Table`}>
+            <TableHead>
+              <TableRow>
+                <TableCell><Typography variant="h6">Title</Typography></TableCell>
+                {view !== "users" && <TableCell align="right"><Typography variant="h6">Poster</Typography></TableCell>}
+                <TableCell align="right"><Typography variant="h6">Actions</Typography></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {view === "users" && users.map(user => (
+                <TableRow key={user.id}>
+                  <TableCell>{user.firstname}</TableCell>
+                  <TableCell align="right">{user.email}</TableCell>
+                  <TableCell align="right">
+                    <Button style={{backgroundColor : '#660000'}} className="custom-button" onClick={() => deleteUser(user.id)}>
+                      <DeleteIcon />
+                    </Button>
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {movies.map((movie) => (
-                  <TableRow key={movie.id}>
-                    <TableCell>{movie.title}</TableCell>
-                    <TableCell align="right"> <img
-          src={movie.poster}
-          alt={movie.title}
-          style={{ 
-            width: "50px", 
-            height: "75px", 
-            borderRadius: "8px", 
-            transition: "transform 0.3s ease-in-out", 
-            cursor: "pointer" 
-          }}
-        /></TableCell>
-                    <TableCell align="right">
-                      <Button variant="outlined" color="error" onClick={() => deleteMovie(movie.id)}>
-                        <DeleteIcon />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </>
-      )}
-      
-      {view === "series" && (
-        <>
-          <h3 style={{ textAlign: "center" }}>Series</h3>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="Series Table">
-              <TableHead>
-                <TableRow>
-                  <TableCell><h4>Title</h4></TableCell>
-                  <TableCell align="right"><h4>poster</h4></TableCell>
-                  <TableCell align="right"><h4>Actions</h4></TableCell>
+              ))}
+              {(view === "movies" ? movies : series).map(item => (
+                <TableRow key={item.id}>
+                  <TableCell>{item.title}</TableCell>
+                  <TableCell align="right">
+                    <img src={item.poster} alt={item.title} className="poster-image" />
+                  </TableCell>
+                  <TableCell align="right">
+                    <Button style={{backgroundColor : '#660000'}} className="custom-button" onClick={() => (view === "movies" ? deleteMovie(item.id) : deleteSeries(item.id))}>
+                      <DeleteIcon />
+                    </Button>
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {series.map((serie) => (
-                  <TableRow key={serie.id}>
-                    <TableCell>{serie.title}</TableCell>
-                    <TableCell align="right"> <img
-          src={serie.poster}
-          alt={serie.title}
-          style={{ 
-            width: "50px", 
-            height: "75px", 
-            borderRadius: "8px", 
-            transition: "transform 0.3s ease-in-out", 
-            cursor: "pointer" 
-          }}
-        /></TableCell>
-                    <TableCell align="right">
-                      <Button variant="outlined" color="error" onClick={() => deleteSeries(serie.id)}>
-                        <DeleteIcon />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
-    </div>
+    </Container>
   );
 }
