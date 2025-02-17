@@ -511,12 +511,8 @@ function Navbar() {
                       localStorage.clear();
                       nav("/login");
 
-                    
-                   if (text === 'Logout'){
-                      localStorage.clear()
-                      nav('/login')
-
                     }
+                  
                     
                   }}
                   sx={{
