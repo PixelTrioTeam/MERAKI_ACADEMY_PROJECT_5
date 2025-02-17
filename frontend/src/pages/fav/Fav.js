@@ -107,7 +107,6 @@ const MovieModal = ({ show, onHide, fav }) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
   );
@@ -159,7 +158,6 @@ const Fav = () => {
                   <div className="flip-card-back">
                     <h2>{fav.movie_title || fav.series_title}</h2>
                     <p>{fav.movie_description || fav.series_description}</p>
-                    <button className="more-button">More</button>
                   </div>
                 </div>
               </div>

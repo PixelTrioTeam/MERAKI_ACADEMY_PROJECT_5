@@ -83,20 +83,5 @@
     color: #ffd700;
   }
   
-  .more-button {
-    background-color: white;
-    color: black;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 10px;
-    transition: background 0.3s ease-in-out;
-  }
-  
-  .more-button:hover {
-    background-color: #ff4500;
-    color: white;
-  }
+
   
