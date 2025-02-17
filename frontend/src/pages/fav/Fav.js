@@ -39,7 +39,7 @@ const MovieModal = ({ show, onHide, fav }) => {
         )
         .then(() => {
           dispatch(removeFav(fav.movie_id || fav.series_id));
-          alert("Removed from favorites!");
+          // alert("Removed from favorites!");
         })
         .catch((err) => console.log("Error:", err));
     } else {
@@ -49,7 +49,7 @@ const MovieModal = ({ show, onHide, fav }) => {
         })
         .then((res) => {
           dispatch(addFav(res.data.favorite));
-          alert("Added to favorites!");
+          // alert("Added to favorites!");
         })
         .catch((err) => console.log("Error:", err));
     }
@@ -106,8 +106,7 @@ const MovieModal = ({ show, onHide, fav }) => {
           </Modal.Footer>
         </div>
       </Modal.Body>
-      <Modal.Footer>
-      </Modal.Footer>
+      <Modal.Footer></Modal.Footer>
     </Modal>
   );
 };

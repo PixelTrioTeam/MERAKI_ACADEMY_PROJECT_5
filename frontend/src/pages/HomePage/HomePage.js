@@ -62,6 +62,7 @@ const MovieModal = ({ show, onHide, movie }) => {
   };
 
   return (
+o
     <Modal show={show} onHide={onHide} size="xl" centered>
     <Modal.Header closeButton>
       <Modal.Title
@@ -155,13 +156,22 @@ const MovieModal = ({ show, onHide, movie }) => {
       </div>
     </Modal.Body>
   </Modal>
+
   );
 };
 
 const SectionHeader = ({ title }) => (
   <div>
-    <h2 style={{color : 'red'}} className="section-title">{title}</h2>
-    <hr style={{ background : 'linear-gradient(135deg, #1a1a1a, #660000)'}} className="section-divider" />
+    <h2
+      style={{ color: "white", textshadow: "1px 1px 2px #ff0000 " }}
+      className="section-title"
+    >
+      {title}
+    </h2>
+    <hr
+      style={{ background: "linear-gradient(135deg, #1a1a1a, #660000)" }}
+      className="section-divider"
+    />
   </div>
 );
 
@@ -253,7 +263,7 @@ const HomePage = () => {
 
         <div>
           <div className="movies-container">
-          <SectionHeader title="Movies By Nolan" />
+            <SectionHeader title="Movies By Nolan" />
             <div className="movies-grid">
               {movies.length > 0 ? (
                 movies.map((movie) =>
@@ -299,7 +309,7 @@ const HomePage = () => {
           </div>
 
           <div className="series-container">
-          <SectionHeader title="Latest Episodes" />
+            <SectionHeader title="Latest Episodes" />
             <div className="movies-grid">
               {series.length > 0 ? (
                 series.map((serie) =>
@@ -345,7 +355,7 @@ const HomePage = () => {
         </div>
         <div>
           <div className="movies-container">
-          <SectionHeader title="Top 10 in Jordan" />
+            <SectionHeader title="Top 10 in Jordan" />
             <div className="movies-grid">
               {movies.length > 0 ? (
                 movies.map((movie) =>
@@ -390,7 +400,7 @@ const HomePage = () => {
           </div>
 
           <div className="movies-container">
-          <SectionHeader title="Coming Soon" />
+            <SectionHeader title="Coming Soon" />
             <div className="movies-grid">
               {movies.length > 0 ? (
                 movies.map((movie) =>

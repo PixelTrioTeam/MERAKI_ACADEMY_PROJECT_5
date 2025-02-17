@@ -156,7 +156,7 @@ const MovieModal = ({ show, onHide, movie }) => {
   );
 };
 
-const pages = ["Home", "Movies", "Series", "Genre", "Favorites",];
+const pages = ["Home", "Movies", "Series", "Genre", "Favorites"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -167,7 +167,7 @@ function Navbar() {
   const genres = useSelector((state) => state.genre.genre);
   const movies = useSelector((state) => state.movies.movies);
   const series = useSelector((state) => state.series.series);
-  const userId = localStorage.getItem('userId')
+  const userId = localStorage.getItem("userId");
 
   const [searchResultMovie, setsearchResultMovie] = useState([]);
   const [searchResultSeries, setsearchResultSeries] = useState([]);
@@ -227,8 +227,9 @@ function Navbar() {
 
   return (
     <AppBar
-      position="static"
+      position="fixed"
       sx={{ background: "linear-gradient(to right, red, black)" }}
+      style={{ width: "100%" }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -421,8 +422,8 @@ function Navbar() {
                       onClick={() => {
                         setSelectedMovie(movie);
                         setModalShow(true);
-                        setsearchResultMovie('');
-                        setsearchResultSeries('')
+                        setsearchResultMovie("");
+                        setsearchResultSeries("");
                       }}
                     >
                       <ListItemText primary={movie.title} />
@@ -446,8 +447,8 @@ function Navbar() {
                       onClick={() => {
                         setSelectedMovie(serie);
                         setModalShow(true);
-                        setsearchResultMovie('');
-                        setsearchResultSeries('')
+                        setsearchResultMovie("");
+                        setsearchResultSeries("");
                       }}
                     >
                       <ListItemText primary={serie.title} />
@@ -504,16 +505,13 @@ function Navbar() {
                   button
                   key={text}
                   onClick={() => {
-
                     if (text === "Admin Dashboard") {
                       nav(`/admin-dashboard`);
                     } else if (text === "Logout") {
                       localStorage.clear();
                       nav("/login");
+                
 
-                    }
-                  
-                    
                   }}
                   sx={{
                     "&:hover": { backgroundColor: "red" },
@@ -524,8 +522,8 @@ function Navbar() {
                   <ListItemText primary={text} />
                 </ListItem>
               ))}
-              { userId == 1 || userId == 2 || userId == 3 ? (
-                <ListItem 
+              {userId == 1 || userId == 2 || userId == 3 ? (
+                <ListItem
                   button
                   key="Admin Dashboard"
                   onClick={() => nav("/admin-dashboard")}
@@ -537,8 +535,7 @@ function Navbar() {
                 >
                   <ListItemText primary="Admin Dashboard" />
                 </ListItem>
-              ):null
-              }
+              ) : null}
             </List>
           </Drawer>
         </Toolbar>

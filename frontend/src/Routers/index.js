@@ -102,14 +102,12 @@ const router = createBrowserRouter([
     ],
   },
   {
-
     path: "/payment",
     element: <Payment />,
   },
   {
     path: "/FullScreen",
     element: <MovieFullScreen />,
-
   },
 ]);
 
