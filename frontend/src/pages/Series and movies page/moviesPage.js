@@ -8,15 +8,19 @@ import {
   removeFav,
   addFav,
 } from "../../service/redux/reducers/fav/favSlice";
-import { Modal, Button, Alert } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure you're importing Bootstrap CSS
 
+import { Modal, Button, Alert, Nav } from "react-bootstrap";
+import MovieFullScreen from "../MovieFullScreen/MovieFullScreen";
 import "./movies.css";
+import { useNavigate } from "react-router-dom";
 
 const MovieModal = ({ show, onHide, movie }) => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.fav);
   const [alertMessage, setAlertMessage] = useState(null);
   const [alertVariant, setAlertVariant] = useState("");
+  const nav = useNavigate();
   if (!movie) return null;
 
   const isFavorite = favorites.some(
@@ -59,73 +63,108 @@ const MovieModal = ({ show, onHide, movie }) => {
 
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
-      <Modal.Header closeButton>
-        <Modal.Title className="modal-title">{movie.title}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body className="d-flex">
-        <img
-          src={movie.poster}
-          alt={movie.title}
-          style={{ width: "40%", borderRadius: "10px" }}
-        />
-        <div className="modal-content-container">
-          {alertMessage && (
-            <Alert
-              variant={alertVariant}
-              onClose={() => setAlertMessage(null)}
-              dismissible
-            >
-              {alertMessage}
-            </Alert>
-          )}
+  <Modal.Header closeButton>
+    <Modal.Title
+      className="modal-title"
+      style={{
+        fontSize: '28px',
+        fontWeight: '600',
+        fontFamily: '"Poppins", sans-serif',
+        color: '#333', // Dark color for title
+      }}
+    >
+      <div style={{color : 'red'}}>{movie.title}</div>
+    </Modal.Title>
+  </Modal.Header>
 
-          {movie.trailer && movie.trailer.includes("youtube.com") ? (
-            <iframe
-              width="100%"
-              height="315"
-              src={getYouTubeEmbedUrl(movie.trailer)}
-              title={movie.title}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          ) : (
-            <video
-              src={movie.trailer}
-              controls
-              autoPlay
-              style={{ width: "100%" }}
-            ></video>
-          )}
-          <h4 className="modal-movie-title">{movie.title}</h4>
-          <h4 className="modal-movie-description">{movie.genre_name}</h4>
-          <h4 className="modal-movie-description">{movie.rate}</h4>
-          <h4 className="modal-movie-description">{movie.writer_name}</h4>
-          <p className="modal-movie-description">{movie.description}</p>
-          <Modal.Footer>
-            {movie.trailer && (
-              <Button
-                variant="danger"
-                as="a"
-                href={movie.trailer}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Watch Trailer
-              </Button>
-            )}
-            <Button variant="primary" onClick={handleToggleFav}>
-              {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
-            </Button>
-          </Modal.Footer>
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={onHide}>Close</Button>
+  <Modal.Body className="d-flex">
+    <img
+      src={movie.poster}
+      alt={movie.title}
+      style={{
+        width: "40%",
+        borderRadius: "10px",
+        marginRight: "20px",
+      }}
+    />
+    <div className="modal-content-container" style={{ flex: 1 }}>
+      {alertMessage && (
+        <Alert
+          variant={alertVariant}
+          onClose={() => setAlertMessage(null)}
+          dismissible
+          style={{ marginBottom: '20px', fontFamily: '"Poppins", sans-serif' }}
+        >
+          {alertMessage}
+        </Alert>
+      )}
+
+      {movie.trailer && movie.trailer.includes("youtube.com") ? (
+        <iframe
+          width="100%"
+          height="315"
+          src={getYouTubeEmbedUrl(movie.trailer)}
+          title={movie.title}
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      ) : (
+        <video
+          src={movie.trailer}
+          controls
+          autoPlay
+          style={{ width: "100%", marginBottom: "20px" }}
+        ></video>
+      )}
+
+      
+      <h5 className="modal-movie-description" style={{ marginBottom: '10px', fontFamily: '"Poppins", sans-serif' }}>
+        <span style={{ color: 'red' }}>Genre: </span>{movie.genre_name}
+      </h5>
+      <h5 className="modal-movie-description" style={{ marginBottom: '10px', fontFamily: '"Poppins", sans-serif' }}>
+        <span style={{ color: 'red' }}>Rating: </span>{movie.rate}
+      </h5>
+      <h5 className="modal-movie-description" style={{ marginBottom: '10px', fontFamily: '"Poppins", sans-serif' }}>
+        <span style={{ color: 'red' }}>Writer: </span>{movie.writer_name}
+      </h5>
+      <h5 className="modal-movie-description" style={{ marginBottom: '10px', fontFamily: '"Poppins", sans-serif' }}>
+        <span style={{ color: 'red' }}>description: </span>{movie.description}
+      </h5>
+      
+
+      <Modal.Footer style={{ justifyContent: 'space-between' }}>
+        {movie.trailer && (
+          <Button
+            variant="danger"
+            onClick={() => nav("/FullScreen", { state: { movie } })}
+            style={{ padding: '10px 20px', fontSize: '16px' }}
+          >
+            Watch now
+          </Button>
+        )}
+        <Button
+          variant="primary"
+          onClick={handleToggleFav}
+          style={{ padding: '10px 20px', fontSize: '16px' }}
+        >
+          {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+        </Button>
       </Modal.Footer>
-    </Modal>
+    </div>
+  </Modal.Body>
+</Modal>
+
+  
   );
 };
+
+const SectionHeader = ({ title }) => (
+  <div>
+    <h2 style={{color : 'red'}} className="section-title">{title}</h2>
+    <hr style={{ background : 'linear-gradient(135deg, #1a1a1a, #660000)'}} className="section-divider" />
+  </div>
+);
 
 const MoviesPage = () => {
   const dispatch = useDispatch();
@@ -148,7 +187,7 @@ const MoviesPage = () => {
     <div className="movies-container">
       {genres.map((genre) => (
         <section key={genre} className="genre-section">
-          <h2 className="genre-title">{genre}</h2>
+          <SectionHeader title={genre} />
           <div className="movies-grid">
             {movies.length > 0 ? (
               movies
