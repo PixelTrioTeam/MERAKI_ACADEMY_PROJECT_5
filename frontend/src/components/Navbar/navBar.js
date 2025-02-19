@@ -500,7 +500,7 @@ function Navbar() {
             }}
           >
             <List>
-              {["Logout", "About Us"].map((text) => (
+              {["Logout"].map((text) => (
                 <ListItem
                   button
                   key={text}

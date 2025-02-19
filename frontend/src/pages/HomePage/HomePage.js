@@ -289,9 +289,14 @@ const HomePage = () => {
                           gap: "10px",
                         }}
                       >
-                        <p className="description-text"></p>
+                        <p
+                          style={{ fontSize: "10px" }}
+                          className="description-text"
+                        ></p>
                         <h3>{movie.title}</h3>
-                        <p className="movie-description">{movie.description}</p>
+                        <p style={{ fontSize: "15px", opacity: "0.8" }}>
+                          {movie.description}
+                        </p>
                         <p className="movie-actors">{movie.actor_names}</p>
                         <p className="movie-director">{movie.director_name}</p>
                         <Button
