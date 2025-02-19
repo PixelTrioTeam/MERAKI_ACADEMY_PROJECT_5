@@ -6,11 +6,12 @@ const messageHandler = (socket, io) => {
 
     // invoke join from auth to send message and send this meesage
     //                           send to client 2 and recive from 1
-    socket.to("room-" + data.to).emit("message", data);
+    socket.to("room-" + data.to).emit("message", [data]);
 
     // response the message use emit() & event postMan listen;
     //          event   date
     socket.emit("message", data);
   });
 };
+
 module.exports = messageHandler;

@@ -19,6 +19,7 @@ const Login = () => {
   // access the token and userId and isLoggedIn
   // const token = state.authReducer.token;
   // const userId = state.authReducer.userId;
+
   const isLoggedIn = state.authReducer.isLoggedIn;
 
   // declare status
@@ -42,14 +43,16 @@ const Login = () => {
         setMessage("");
         localStorage.setItem("token", result.data.token);
         localStorage.setItem("userId", result.data.userId);
-        localStorage.setItem("roleId", result.data.roleId);
+        localStorage.setItem("role_id", result.data.role_id);
         console.log(
           "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           result.data
         );
+        console.log(result.data.role_id);
 
         dispatch(setLogin(result.data.token));
         dispatch(setUserId(result.data.userId));
+
         if (isLoggedIn) {
           nav("/main");
         }
@@ -154,14 +157,14 @@ const Login = () => {
           <span style={{ fontFamily: "arial" }}>
             You Dont Have Any Account?
             <Link className="back_navbar" to={"/register"}>
-              Click Here
+              Register
             </Link>
           </span>
           <br />
           <span style={{ fontFamily: "arial" }}>
             Return To The Home Page?
             <Link className="back_navbar" to={"/"}>
-              Click Here
+              Home
             </Link>
           </span>
         </form>{" "}

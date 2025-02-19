@@ -32,6 +32,10 @@ import {
   addFav,
 } from "../../service/redux/reducers/fav/favSlice";
 
+// socket io
+import socketConnect from "../../socket";
+import Chat from "../../pages/chat/Chat";
+
 const MovieModal = ({ show, onHide, movie }) => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.fav);
@@ -156,7 +160,11 @@ const MovieModal = ({ show, onHide, movie }) => {
   );
 };
 
+
+const pages = ["Home", "Movies", "Series", "Genre", "Favorites","Chat"];
+
 const pages = ["Home", "Movies", "Series", "Genre", "Favorites"];
+
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -178,9 +186,35 @@ function Navbar() {
       authReducer: reducer.authReducer,
     };
   });
+  // state to connct the backend
+  const [socket, setSocket] = useState(null);
+  // state is connect
+  const [isConnect, setIsConnect] = useState(false);
   // access the token and userId and isLoggedIn
-  // const token = state.authReducer.token;
-  // const userId = state.authReducer.userId;
+  const Token = state.authReducer.token;
+  const user_id = state.authReducer.userId;
+  console.log(user_id);
+
+  // use Effect to socket io
+  useEffect(() => {
+    socket?.on("connect", () => {
+      console.log(true);
+      setIsConnect(true);
+    });
+    socket?.on("connect_error", (error) => {
+      console.log(error.message);
+      setIsConnect(false);
+    });
+
+    return () => {
+      socket?.close();
+      socket?.removeAllListeners();
+      setIsConnect(false);
+    };
+  }, [socket]);
+
+  console.log(socket);
+
   const isLoggedIn = state.authReducer.isLoggedIn;
   const [setSearch, setsetSearch] = useState("");
   useEffect(() => {
@@ -500,7 +534,11 @@ function Navbar() {
             }}
           >
             <List>
+
+              {["Logout", "Chat", "About Us"].map((text) => (
+
               {["Logout"].map((text) => (
+
                 <ListItem
                   button
                   key={text}
@@ -510,6 +548,19 @@ function Navbar() {
                     } else if (text === "Logout") {
                       localStorage.clear();
                       nav("/login");
+
+                    }
+
+                    if (text === "Logout") {
+                      localStorage.clear();
+                      nav("/login");
+                    } else if (text === "Chat") {
+                    
+
+
+                      nav("/Chat");
+
+
                     }
                   }}
                   sx={{
@@ -521,6 +572,10 @@ function Navbar() {
                   <ListItemText primary={text} />
                 </ListItem>
               ))}
+
+             
+
+
               {userId == 1 || userId == 2 || userId == 3 ? (
                 <ListItem
                   button
