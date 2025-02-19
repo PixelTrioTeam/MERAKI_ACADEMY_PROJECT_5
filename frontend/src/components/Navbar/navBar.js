@@ -32,6 +32,10 @@ import {
   addFav,
 } from "../../service/redux/reducers/fav/favSlice";
 
+// socket io
+import socketConnect from "../../socket";
+import Chat from "../../pages/chat/Chat";
+
 const MovieModal = ({ show, onHide, movie }) => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.fav);
@@ -156,7 +160,7 @@ const MovieModal = ({ show, onHide, movie }) => {
   );
 };
 
-const pages = ["Home", "Movies", "Series", "Genre", "Favorites",];
+const pages = ["Home", "Movies", "Series", "Genre", "Favorites","Chat"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -167,7 +171,7 @@ function Navbar() {
   const genres = useSelector((state) => state.genre.genre);
   const movies = useSelector((state) => state.movies.movies);
   const series = useSelector((state) => state.series.series);
-  const userId = localStorage.getItem('userId')
+  const userId = localStorage.getItem("userId");
 
   const [searchResultMovie, setsearchResultMovie] = useState([]);
   const [searchResultSeries, setsearchResultSeries] = useState([]);
@@ -178,9 +182,35 @@ function Navbar() {
       authReducer: reducer.authReducer,
     };
   });
+  // state to connct the backend
+  const [socket, setSocket] = useState(null);
+  // state is connect
+  const [isConnect, setIsConnect] = useState(false);
   // access the token and userId and isLoggedIn
-  // const token = state.authReducer.token;
-  // const userId = state.authReducer.userId;
+  const Token = state.authReducer.token;
+  const user_id = state.authReducer.userId;
+  console.log(user_id);
+
+  // use Effect to socket io
+  useEffect(() => {
+    socket?.on("connect", () => {
+      console.log(true);
+      setIsConnect(true);
+    });
+    socket?.on("connect_error", (error) => {
+      console.log(error.message);
+      setIsConnect(false);
+    });
+
+    return () => {
+      socket?.close();
+      socket?.removeAllListeners();
+      setIsConnect(false);
+    };
+  }, [socket]);
+
+  console.log(socket);
+
   const isLoggedIn = state.authReducer.isLoggedIn;
   const [setSearch, setsetSearch] = useState("");
   useEffect(() => {
@@ -421,8 +451,8 @@ function Navbar() {
                       onClick={() => {
                         setSelectedMovie(movie);
                         setModalShow(true);
-                        setsearchResultMovie('');
-                        setsearchResultSeries('')
+                        setsearchResultMovie("");
+                        setsearchResultSeries("");
                       }}
                     >
                       <ListItemText primary={movie.title} />
@@ -446,8 +476,8 @@ function Navbar() {
                       onClick={() => {
                         setSelectedMovie(serie);
                         setModalShow(true);
-                        setsearchResultMovie('');
-                        setsearchResultSeries('')
+                        setsearchResultMovie("");
+                        setsearchResultSeries("");
                       }}
                     >
                       <ListItemText primary={serie.title} />
@@ -499,25 +529,27 @@ function Navbar() {
             }}
           >
             <List>
-              {["Logout", "About Us"].map((text) => (
+              {["Logout", "Chat", "About Us"].map((text) => (
                 <ListItem
                   button
                   key={text}
                   onClick={() => {
-
                     if (text === "Admin Dashboard") {
                       nav(`/admin-dashboard`);
                     } else if (text === "Logout") {
                       localStorage.clear();
                       nav("/login");
-
-                    
-                   if (text === 'Logout'){
-                      localStorage.clear()
-                      nav('/login')
-
                     }
+
+                    if (text === "Logout") {
+                      localStorage.clear();
+                      nav("/login");
+                    } else if (text === "Chat") {
                     
+
+
+                      nav("/Chat");
+                    }
                   }}
                   sx={{
                     "&:hover": { backgroundColor: "red" },
@@ -528,8 +560,9 @@ function Navbar() {
                   <ListItemText primary={text} />
                 </ListItem>
               ))}
-              { userId == 1 || userId == 2 || userId == 3 ? (
-                <ListItem 
+             
+              {userId == 1 || userId == 2 || userId == 3 ? (
+                <ListItem
                   button
                   key="Admin Dashboard"
                   onClick={() => nav("/admin-dashboard")}
@@ -541,8 +574,7 @@ function Navbar() {
                 >
                   <ListItemText primary="Admin Dashboard" />
                 </ListItem>
-              ):null
-              }
+              ) : null}
             </List>
           </Drawer>
         </Toolbar>

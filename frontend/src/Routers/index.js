@@ -17,6 +17,7 @@ import Fav from "../pages/fav/Fav";
 import Payment from "../pages/payment/Payment";
 
 import MovieFullScreen from "../pages/MovieFullScreen/MovieFullScreen";
+import Chat from "../pages/chat/Chat";
 
 const router = createBrowserRouter([
   {
@@ -102,13 +103,16 @@ const router = createBrowserRouter([
     ],
   },
   {
-
     path: "/payment",
     element: <Payment />,
-
+  },
+  {
     path: "/FullScreen",
     element: <MovieFullScreen />,
-
+  },
+  {
+    path: "Chat",
+    element: <Chat/>,
   },
 ]);
 
