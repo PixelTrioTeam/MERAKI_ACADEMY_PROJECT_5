@@ -62,105 +62,160 @@ const MovieModal = ({ show, onHide, movie }) => {
   };
 
   return (
-    <Modal show={show} onHide={onHide} size="lg" centered>
-  <Modal.Header closeButton>
-    <Modal.Title
-      className="modal-title"
-      style={{
-        fontSize: '28px',
-        fontWeight: '600',
-        fontFamily: '"Poppins", sans-serif',
-        color: '#333', // Dark color for title
-      }}
+    <Modal
+      style={{ marginTop: "33px" }}
+      show={show}
+      onHide={onHide}
+      size="xl"
+      centered
     >
-      <div style={{color : 'red'}}>{movie.title}</div>
-    </Modal.Title>
-  </Modal.Header>
-
-  <Modal.Body className="d-flex">
-    <img
-      src={movie.poster}
-      alt={movie.title}
-      style={{
-        width: "40%",
-        borderRadius: "10px",
-        marginRight: "20px",
-      }}
-    />
-    <div className="modal-content-container" style={{ flex: 1 }}>
-      {alertMessage && (
-        <Alert
-          variant={alertVariant}
-          onClose={() => setAlertMessage(null)}
-          dismissible
-          style={{ marginBottom: '20px', fontFamily: '"Poppins", sans-serif' }}
+      <Modal.Header closeButton>
+        <Modal.Title
+          className="modal-title"
+          style={{
+            fontSize: "28px",
+            fontWeight: "600",
+            fontFamily: '"Poppins", sans-serif',
+            color: "#333", // Dark color for title
+          }}
         >
-          {alertMessage}
-        </Alert>
-      )}
+          <div style={{ color: "#dcdcdc" }}>{movie.title}</div>
+        </Modal.Title>
+      </Modal.Header>
 
-      {movie.trailer && movie.trailer.includes("youtube.com") ? (
-        <iframe
-          width="100%"
-          height="315"
-          src={getYouTubeEmbedUrl(movie.trailer)}
-          title={movie.title}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      ) : (
-        <video
-          src={movie.trailer}
-          controls
-          autoPlay
-          style={{ width: "100%", marginBottom: "20px" }}
-        ></video>
-      )}
+      <Modal.Body className="d-flex">
+        <img
+          src={movie.poster}
+          alt={movie.title}
+          style={{
+            height: "650px",
+            width: "384 px",
+            borderRadius: "10px",
+            marginRight: "20px",
+          }}
+        />
+        <div className="modal-content-container" style={{ flex: 1 }}>
+          {alertMessage && (
+            <Alert
+              variant={alertVariant}
+              onClose={() => setAlertMessage(null)}
+              dismissible
+              style={{
+                marginBottom: "20px",
+                fontFamily: '"Poppins", sans-serif',
+              }}
+            >
+              {alertMessage}
+            </Alert>
+          )}
 
-      
-      <h5 className="modal-movie-description" style={{ marginBottom: '10px', fontFamily: '"Poppins", sans-serif' }}>
-        <span style={{ color: 'red' }}>Genre: </span>{movie.genre_name}
-      </h5>
-      <h5 className="modal-movie-description" style={{ marginBottom: '10px', fontFamily: '"Poppins", sans-serif' }}>
-        <span style={{ color: 'red' }}>Rating: </span>{movie.rate}
-      </h5>
-      <h5 className="modal-movie-description" style={{ marginBottom: '10px', fontFamily: '"Poppins", sans-serif' }}>
-        <span style={{ color: 'red' }}>Writer: </span>{movie.writer_name}
-      </h5>
-      <h5 className="modal-movie-description" style={{ marginBottom: '10px', fontFamily: '"Poppins", sans-serif' }}>
-        <span style={{ color: 'red' }}>description: </span>{movie.description}
-      </h5>
-      
+          {movie.trailer && movie.trailer.includes("youtube.com") ? (
+            <iframe
+              width="100%"
+              height="315"
+              src={getYouTubeEmbedUrl(movie.trailer)}
+              title={movie.title}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          ) : (
+            <video
+              src={movie.trailer}
+              controls
+              autoPlay
+              style={{ width: "100%", marginBottom: "20px" }}
+            ></video>
+          )}
 
-      <Modal.Footer style={{ justifyContent: 'space-between' }}>
-        {movie.trailer && (
-          <Button
-            variant="danger"
-            onClick={() => nav("/FullScreen", { state: { movie } })}
-            style={{ padding: '10px 20px', fontSize: '16px' }}
+          <h5
+            className="modal-movie-description"
+            style={{
+              marginBottom: "10px",
+              fontFamily: '"Poppins", sans-serif',
+            }}
           >
-            Watch now
-          </Button>
-        )}
-        <Button
-          variant="primary"
-          onClick={handleToggleFav}
-          style={{ padding: '10px 20px', fontSize: '16px' }}
-        >
-          {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
-        </Button>
-      </Modal.Footer>
-    </div>
-  </Modal.Body>
-</Modal>
+            <span style={{ color: "white", fontWeight: "bold" }}>Genre: </span>
+            {movie.genre_name}
+          </h5>
+          <h5
+            className="modal-movie-description"
+            style={{
+              marginBottom: "10px",
+              fontFamily: '"Poppins", sans-serif',
+            }}
+          >
+            <span style={{ color: "white", fontWeight: "bold" }}>Rating: </span>
+            {movie.rate}
+          </h5>
+          <h5
+            className="modal-movie-description"
+            style={{
+              marginBottom: "10px",
+              fontFamily: '"Poppins", sans-serif',
+            }}
+          >
+            <span style={{ color: "white", fontWeight: "bold" }}>Writer: </span>
+            {movie.writer_name}
+          </h5>
+          <h5
+            className="modal-movie-description"
+            style={{
+              marginBottom: "10px",
+              fontFamily: '"Poppins", sans-serif',
+            }}
+          >
+            <span style={{ color: "white", fontWeight: "bold" }}>
+              description:{" "}
+            </span>
+            {movie.description}
+          </h5>
+          <div className="footer">
+            <Modal.Footer style={{ justifyContent: "space-between" }}>
+              {movie.trailer && (
+                <Button
+                  variant="danger"
+                  onClick={() => nav("/FullScreen", { state: { movie } })}
+                  style={{
+                    width: "200px",
+                    padding: "10px 20px",
+                    fontSize: "16px",
+                  }}
+                >
+                  Watch now
+                </Button>
+              )}
+              <Button
+                variant="primary"
+                onClick={handleToggleFav}
+                style={{
+                  width: "200px",
+                  padding: "10px 20px",
+                  fontSize: "16px",
+                }}
+              >
+                {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+              </Button>
+            </Modal.Footer>
+          </div>
+        </div>
+      </Modal.Body>
+    </Modal>
   );
 };
 
 const SectionHeader = ({ title }) => (
   <div>
-    <h2 style={{color : 'red'}} className="section-title">{title}</h2>
-    <hr style={{ background : 'linear-gradient(135deg, #1a1a1a, #660000)'}} className="section-divider" />
+    <h2
+      style={{ color: "white", textshadow: "1px 1px 2px #ff0000 " }}
+      className="section-title"
+    >
+      {title}
+    </h2>
+    <hr
+      style={{ background: "linear-gradient(135deg, #1a1a1a, #660000)" }}
+      className="section-divider"
+    />
   </div>
 );
 
@@ -199,7 +254,11 @@ const HomePage = () => {
   return (
     <>
       <div className="homepage-container">
-        <Carousel activeIndex={index} onSelect={handleSelect}>
+        <Carousel
+          style={{ display: "flex" }}
+          activeIndex={index}
+          onSelect={handleSelect}
+        >
           {movies.length > 0 ? (
             movies.slice(0, 5).map((movie) => (
               <Carousel.Item key={movie.id}>
@@ -221,10 +280,23 @@ const HomePage = () => {
                       />
                     </div>
                     <div className="movie-info">
-                      <div className="carousel-description">
-                        <p className="description-text"></p>
+                      <div
+                        className="carousel-description"
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-between",
+                          gap: "10px",
+                        }}
+                      >
+                        <p
+                          style={{ fontSize: "10px" }}
+                          className="description-text"
+                        ></p>
                         <h3>{movie.title}</h3>
-                        <p className="movie-description">{movie.description}</p>
+                        <p style={{ fontSize: "15px", opacity: "0.8" }}>
+                          {movie.description}
+                        </p>
                         <p className="movie-actors">{movie.actor_names}</p>
                         <p className="movie-director">{movie.director_name}</p>
                         <Button
@@ -251,8 +323,8 @@ const HomePage = () => {
         </Carousel>
 
         <div>
-          <div className="movies-container">
-          <SectionHeader title="Movies By Nolan" />
+          <div style={{ marginTop: "35px" }} className="movies-container">
+            <SectionHeader title="Movies By Nolan" />
             <div className="movies-grid">
               {movies.length > 0 ? (
                 movies.map((movie) =>
@@ -298,7 +370,7 @@ const HomePage = () => {
           </div>
 
           <div className="series-container">
-          <SectionHeader title="Latest Episodes" />
+            <SectionHeader title="Latest Episodes" />
             <div className="movies-grid">
               {series.length > 0 ? (
                 series.map((serie) =>
@@ -344,7 +416,7 @@ const HomePage = () => {
         </div>
         <div>
           <div className="movies-container">
-          <SectionHeader title="Top 10 in Jordan" />
+            <SectionHeader title="Top 10 in Jordan" />
             <div className="movies-grid">
               {movies.length > 0 ? (
                 movies.map((movie) =>
@@ -389,7 +461,7 @@ const HomePage = () => {
           </div>
 
           <div className="movies-container">
-          <SectionHeader title="Coming Soon" />
+            <SectionHeader title="Coming Soon" />
             <div className="movies-grid">
               {movies.length > 0 ? (
                 movies.map((movie) =>

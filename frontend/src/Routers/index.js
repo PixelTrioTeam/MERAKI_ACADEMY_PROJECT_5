@@ -3,7 +3,7 @@ import HomePage from "../pages/HomePage/HomePage";
 import Main from "../layouts/Main/index";
 import MoviesPage from "../pages/Series and movies page/moviesPage";
 
-import WelcomePage from "../pages/welcomePage/WelcomePage";
+import WelcomePage from "../pages/WelcomePage/WelcomePage";
 
 import SeriesPage from "../pages/Series and movies page/seriesPage";
 import Login from "../pages/Login/login";
@@ -109,10 +109,12 @@ const router = createBrowserRouter([
   {
     path: "/FullScreen",
     element: <MovieFullScreen />,
+
   },
   {
     path: "Chat",
     element: <Chat/>,
+
   },
 ]);
 

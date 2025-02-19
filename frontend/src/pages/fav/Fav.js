@@ -39,7 +39,7 @@ const MovieModal = ({ show, onHide, fav }) => {
         )
         .then(() => {
           dispatch(removeFav(fav.movie_id || fav.series_id));
-          alert("Removed from favorites!");
+          // alert("Removed from favorites!");
         })
         .catch((err) => console.log("Error:", err));
     } else {
@@ -49,7 +49,7 @@ const MovieModal = ({ show, onHide, fav }) => {
         })
         .then((res) => {
           dispatch(addFav(res.data.favorite));
-          alert("Added to favorites!");
+          // alert("Added to favorites!");
         })
         .catch((err) => console.log("Error:", err));
     }
@@ -106,11 +106,30 @@ const MovieModal = ({ show, onHide, fav }) => {
           </Modal.Footer>
         </div>
       </Modal.Body>
-      <Modal.Footer>
-      </Modal.Footer>
+      <Modal.Footer></Modal.Footer>
     </Modal>
   );
 };
+
+const SectionHeader = ({ title }) => (
+  <div>
+    <h2
+      style={{
+        marginTop: "90px",
+        color: "white",
+        textshadow: "1px 1px 2px #ff0000 ",
+        marginLeft: "15px",
+      }}
+      className="section-title"
+    >
+      {title}
+    </h2>
+    <hr
+      style={{ background: "linear-gradient(135deg, #1a1a1a, #660000)" }}
+      className="section-divider"
+    />
+  </div>
+);
 
 const Fav = () => {
   const dispatch = useDispatch();
@@ -134,7 +153,7 @@ const Fav = () => {
 
   return (
     <div>
-      <h2>Your Favorites</h2>
+      <SectionHeader title="Your Favorite" />
       <div className="movies-container">
         <div className="movies-grid">
           {favorites.length > 0 ? (
