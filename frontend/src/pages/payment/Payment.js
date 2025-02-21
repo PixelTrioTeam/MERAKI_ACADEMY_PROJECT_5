@@ -84,26 +84,26 @@ const PlanCard = ({ plan }) => {
       </div>
       {openModal && (
         <>
-          <div className="modal-overlay">
-            <div className="modal-content">
+          <div className="modall-overlay">
+            <div className="modall-content">
               <button
                 style={{ color: "black" }}
-                className="close-button"
+                className="cllose-button"
                 onClick={() => {
                   setOpenModal(false);
                 }}
               >
                 ✖
               </button>
-              <h2 className="modal-title">Enter Credit Card Details</h2>
-              <form onSubmit={handleSubmit} className="modal-form">
+              <h2 className="modall-title">Enter Credit Card Details</h2>
+              <form onSubmit={handleSubmit} className="modall-form">
                 <input
                   type="text"
                   name="cardNumber"
                   placeholder="Card Number"
                   value={cardInfo.cardNumber}
                   onChange={handleChange}
-                  className="input-field"
+                  className="input-fielld"
                   required
                 />
                 <input
@@ -112,17 +112,17 @@ const PlanCard = ({ plan }) => {
                   placeholder="Cardholder Name"
                   value={cardInfo.cardHolder}
                   onChange={handleChange}
-                  className="input-field"
+                  className="input-fielld"
                   required
                 />
-                <div className="input-row">
+                <div className="input-roww">
                   <input
                     type="text"
                     name="expiryDate"
                     placeholder="MM/YY"
                     value={cardInfo.expiryDate}
                     onChange={handleChange}
-                    className="input-field half-width"
+                    className="input-fielld hallf-width"
                     required
                   />
                   <input
@@ -131,7 +131,7 @@ const PlanCard = ({ plan }) => {
                     placeholder="CVV"
                     value={cardInfo.cvv}
                     onChange={handleChange}
-                    className="input-field half-width"
+                    className="input-fielld hallf-width"
                     required
                   />
                 </div>
