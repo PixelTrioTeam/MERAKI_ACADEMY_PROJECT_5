@@ -85,7 +85,7 @@
 
 /* Modal Styles */
 
-.modal-overlay {
+.modall-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -98,7 +98,7 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.modal-content {
+.modall-content {
   background: white;
   padding: 20px;
   border-radius: 10px;
@@ -109,7 +109,7 @@
   animation: slideDown 0.3s ease-in-out;
 }
 
-.close-button {
+.cllose-button {
   position: absolute;
   top: 10px;
   right: 15px;
@@ -119,13 +119,13 @@
   cursor: pointer;
 }
 
-.modal-title {
+.modall-title {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
-.input-field {
+.input-fielld {
   width: 100%;
   padding: 10px;
   margin: 8px 0;
@@ -134,12 +134,12 @@
   font-size: 16px;
 }
 
-.input-row {
+.input-roww {
   display: flex;
   justify-content: space-between;
 }
 
-.half-width {
+.hallf-width {
   width: 48%;
 }
 
@@ -149,7 +149,7 @@
   margin-top: 15px;
 }
 
-.open-modal-btn {
+.open-modall-btn {
   padding: 12px 20px;
   background: #007bff;
   color: white;
@@ -160,7 +160,7 @@
   transition: 0.3s;
 }
 
-.open-modal-btn:hover {
+.open-modall-btn:hover {
   background: #0056b3;
 }
 
