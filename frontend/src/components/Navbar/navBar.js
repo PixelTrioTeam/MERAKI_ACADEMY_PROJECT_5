@@ -160,11 +160,7 @@ const MovieModal = ({ show, onHide, movie }) => {
   );
 };
 
-
-const pages = ["Home", "Movies", "Series", "Genre", "Favorites","Chat"];
-
 const pages = ["Home", "Movies", "Series", "Genre", "Favorites"];
-
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -534,11 +530,7 @@ function Navbar() {
             }}
           >
             <List>
-
-              {["Logout", "Chat", "About Us"].map((text) => (
-
-              {["Logout"].map((text) => (
-
+              {["Logout", "Chat", "About Us", "Payment"].map((text) => (
                 <ListItem
                   button
                   key={text}
@@ -548,19 +540,15 @@ function Navbar() {
                     } else if (text === "Logout") {
                       localStorage.clear();
                       nav("/login");
-
                     }
 
                     if (text === "Logout") {
                       localStorage.clear();
                       nav("/login");
                     } else if (text === "Chat") {
-                    
-
-
                       nav("/Chat");
-
-
+                    } else if (text === "Payment") {
+                      nav("/payment");
                     }
                   }}
                   sx={{
@@ -572,9 +560,6 @@ function Navbar() {
                   <ListItemText primary={text} />
                 </ListItem>
               ))}
-
-             
-
 
               {userId == 1 || userId == 2 || userId == 3 ? (
                 <ListItem

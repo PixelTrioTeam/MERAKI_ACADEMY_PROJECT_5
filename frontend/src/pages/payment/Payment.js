@@ -58,14 +58,14 @@ const PlanCard = ({ plan }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Card Information Submitted:", cardInfo);
-    setOpenModal(false); // Close the modal after submission
+    setOpenModal(false);
   };
 
   return (
     <>
       <div className="plan-card">
         <h2 className="name-plan">{plan.name}</h2>
-        
+
         <h3 className="price-plan">{plan.price}</h3>
         <button
           className="payment-plan"
@@ -87,6 +87,7 @@ const PlanCard = ({ plan }) => {
           <div className="modal-overlay">
             <div className="modal-content">
               <button
+                style={{ color: "black" }}
                 className="close-button"
                 onClick={() => {
                   setOpenModal(false);

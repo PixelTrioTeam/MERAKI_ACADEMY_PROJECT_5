@@ -8,12 +8,12 @@ export default function Main() {
       <header style={{ width: "1536px" }}>
         <Navbar />
       </header>
-     
+
       <main>
         <Outlet />
       </main>
-      <footer >
-      <Footer/>
+      <footer>
+        <Footer />
       </footer>
     </div>
   );
