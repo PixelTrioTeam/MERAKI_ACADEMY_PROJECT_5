@@ -181,14 +181,14 @@ const Register = () => {
               <span style={{ fontFamily: "arial" }}>
                 Return To The Home Page?
                 <Link className="back_navbar" to={"/"}>
-                  Home
+                  Click Here
                 </Link>
               </span>
               <br />
               <span style={{ fontFamily: "arial" }}>
                 You Have Any Account?
                 <Link className="back_navbar" to={"/login"}>
-                  Login
+                  Click Here
                 </Link>
               </span>
             </form>
